@@ -350,7 +350,7 @@ function MoneyIncome() {
                                 {editIncomeID === income.id ? (
                                     <InputField
                                         className="Table-Input-Field"
-                                        type="text"
+                                        type="date"
                                         value={editDate}
                                         onChange={(e) => setEditDate(e.target.value)}
                                     />

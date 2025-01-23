@@ -181,16 +181,16 @@ function CustomDrawer({ isOpen, toggleDrawer }) {
             <h2 className='FundValue'>{t("permaFund")}</h2>
             <p className='FundValue'>{permanatFund}</p>
             <div className="PagesContainer">
-              <button onClick={goCustomers} className='btn'>{t("customers")} <br />(alt + c)</button>
-              <button onClick={goSellCustomers} className='btn'>{t("sellCustomer")} <br />(alt + x)</button>
-              <button onClick={goMoneyIncome} className='btn'>{t("moneyIncome")} <br />(alt + m)</button>
-              <button onClick={goPayments} className='btn'>{t("payment")} <br />(alt + p)</button>
-              <button onClick={goTypes} className='btn'>{t("types")} <br />(alt + t)</button>
-              <button onClick={goSupplies} className='btn'>{t("supplies")} <br />(alt + s)</button>
-              <button onClick={goDisptach} className='btn'>{t("dispatchSupplies")} <br />(alt + d)</button>
-              <button onClick={goReciepts} className='btn'>{t("buySupplies")} <br />(alt + a)</button>
-              <button onClick={goEmployee} className='btn'>{t("employees")} <br />(alt + e)</button>
-              <button onClick={goInventory} className='btn'>{t("inventory")} <br />(alt + i)</button>
+              <button onClick={goCustomers} className='btn'>{t("customers")} <br /><span className='ShortCutTip'>(alt + c)</span></button>
+              <button onClick={goSellCustomers} className='btn'>{t("sellCustomer")} <br /><span className='ShortCutTip'>(alt + x)</span></button>
+              <button onClick={goMoneyIncome} className='btn'>{t("moneyIncome")} <br /><span className='ShortCutTip'>(alt + m)</span></button>
+              <button onClick={goPayments} className='btn'>{t("payment")} <br /><span className='ShortCutTip'>(alt + p)</span></button>
+              <button onClick={goTypes} className='btn'>{t("types")} <br /><span className='ShortCutTip'>(alt + t)</span></button>
+              <button onClick={goSupplies} className='btn'>{t("supplies")} <br /><span className='ShortCutTip'>(alt + s)</span></button>
+              <button onClick={goDisptach} className='btn'>{t("dispatchSupplies")} <br /><span className='ShortCutTip'>(alt + d)</span></button>
+              <button onClick={goReciepts} className='btn'>{t("buySupplies")} <br /><span className='ShortCutTip'>(alt + a)</span></button>
+              <button onClick={goEmployee} className='btn'>{t("employees")} <br /><span className='ShortCutTip'>(alt + e)</span></button>
+              <button onClick={goInventory} className='btn'>{t("inventory")} <br /><span className='ShortCutTip'>(alt + i)</span></button>
             </div>
           </div>
         </div>
@@ -366,6 +366,12 @@ const DrawerContent = styled.div`
   }
 
 
+  @media (min-width:1024px){
+    .ShortCutTip{
+      display:inline-block;
+    }
+  }
+
   @media (min-width: 768px) and (max-width: 1024px){
     .Drawer{
         width:40vw;
@@ -395,6 +401,10 @@ const DrawerContent = styled.div`
 
        margin-right: 0.5em;
   
+    }
+
+    .ShortCutTip{
+      display:none;
     }
   
 }  

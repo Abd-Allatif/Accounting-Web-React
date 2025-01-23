@@ -8,7 +8,6 @@ import {
     searchBy_Supplies, getReciepts,
     search_Reciepts, searchBy_only_Supplies
 } from '../../Tools/BackendServices'
-import Loader from '../../Tools/Loader'
 import Drawer from '../../Tools/Drawer'
 import {
     Table,
@@ -33,6 +32,7 @@ function Reciepts() {
     const [countity, setCountity] = useState('');
     const [buy_price, setBuyPrice] = useState('');
     const [sell_price, setSellPrice] = useState('');
+    const [date,setDate] = useState('');
     const [notes, setNotes] = useState('');
     const [recieptAdded, setRecieptAdded] = useState('');
     const [recieptsData, setRecieptsData] = useState([{
@@ -41,6 +41,7 @@ function Reciepts() {
         countity: '',
         buy_price: '',
         sell_price: '',
+        date:'',
         notes: '',
     }]);
     const [editRecieptId, setEditRecieptId] = useState(null);
@@ -51,6 +52,7 @@ function Reciepts() {
         countity: '',
         buy_price: '',
         sell_price: '',
+        date:'',
         notes: '',
     });
     const [searchTypesAndSupplies, setSearchTypesAndSupplies] = useState('');
@@ -287,6 +289,7 @@ function Reciepts() {
             countity: countity,
             buy_price: buy_price,
             sell_price: sell_price,
+            date:date,
             notes: notes,
         }, {
             headers: {
@@ -301,6 +304,7 @@ function Reciepts() {
                 countity: countity,
                 buy_price: buy_price,
                 sell_price: sell_price,
+                date:date,
                 notes: notes,
             }])
             setSearchtype('');
@@ -445,6 +449,7 @@ function Reciepts() {
                 </div>
 
                 <div className="Thirdrow">
+                    <InputField placeholder={t("date")} type="date" className="ThirdrowField" value={date} onChange={(e) => setDate(e.target.value)} />
                     <InputField placeholder={t("notes")} type="Text" className="ThirdrowField" value={notes} onChange={(e) => setNotes(e.target.value)} />
                 </div>
 
@@ -568,7 +573,16 @@ function Reciepts() {
                                 {reciept.total}
                             </TableCell>
                             <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {reciept.date}
+                                {editRecieptId === reciept.id ? (
+                                    <InputField
+                                        className="Table-Input-Field"
+                                        type="date"
+                                        value={editRecieptsData.date}
+                                        onChange={(e) => setEditRecieptsData({ ...editRecieptsData, date: e.target.value })}
+                                    />
+                                ) : (
+                                    reciept.date
+                                )}
                             </TableCell>
                             <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
                                 {editRecieptId === reciept.id ? (
@@ -595,6 +609,7 @@ function Reciepts() {
                                             countity: reciept.countity,
                                             buy_price: reciept.buy_price,
                                             sell_price: reciept.sell_price,
+                                            date:reciept.date,
                                             notes: reciept.notes
                                         });
                                     }}>{t("edit")}</Button>

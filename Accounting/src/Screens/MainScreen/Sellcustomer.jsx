@@ -551,7 +551,16 @@ function SellCustomer() {
                                 )}
                             </TableCell>
                             <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {customer.date_of_buying}
+                                {editSellCustomerID === customer.id ? (
+                                    <InputField
+                                        className="Table-Input-Field"
+                                        type="date"
+                                        value={editsellCustomerData.date_of_buying}
+                                        onChange={(e) => setEditsellCustomerData({ ...editsellCustomerData, date_of_buying: e.target.value })}
+                                    />
+                                ) : (
+                                    customer.date_of_buying
+                                )}
                             </TableCell>
                             <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
                                 {editSellCustomerID === customer.id ? (

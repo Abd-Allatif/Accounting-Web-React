@@ -417,7 +417,7 @@ function DispatchSupplies() {
                                 {editDispatchID === dispatch.id ? (
                                     <InputField
                                         className="Table-Input-Field"
-                                        type="dispatch_date"
+                                        type="date"
                                         value={editDispatchData.dispatch_date}
                                         onChange={(e) => seteditDispatchData({ ...editDispatchData, dispatch_date: e.target.value })}
                                     />

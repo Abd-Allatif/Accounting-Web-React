@@ -201,7 +201,7 @@ function Employee() {
                                 {editEmployeeID === employee.employee_name ? (
                                     <InputField
                                         className="Table-Input-Field"
-                                        type="text"
+                                        type="date"
                                         value={editDate}
                                         onChange={(e) => setEditDate(e.target.value)}
                                     />
