@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 
 function SetAccount() {
   const [loading, setLoading] = useState(false);
-  
-  const { t} = useTranslation();
+
+  const { t } = useTranslation();
 
   const [budget, setBudget] = useState('');
   const [types, setTypes] = useState('');
@@ -46,24 +46,29 @@ function SetAccount() {
       // Refresh the access token
       const newAccessToken = await refreshAccessToken();
 
-      // Send all data to the backend
-      await axios.post(`${import.meta.env.VITE_API_URL}/${userData.user_name}/setup/`, {
-        issatup: true,
-        budget,
-        types: displayTypes,
-        customers: displayCustomer,
-        employees: displayEmployee,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${newAccessToken}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
+      if (budget == null || budget == "") {
+        alert(t("setupError"));
+      }
+      else {
+        // Send all data to the backend
+        await axios.post(`${import.meta.env.VITE_API_URL}/${userData.user_name}/setup/`, {
+          issatup: true,
+          budget,
+          types: displayTypes,
+          customers: displayCustomer,
+          employees: displayEmployee,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${newAccessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+      }
       alert('Setup successful!');
     } catch (error) {
-      console.error('Setup failed:', error);
-      alert('Setup failed, please try again.');
+      if(displayCustomer.length != 0 && displayTypes.length != 0 && displayEmployee.length != 0){
+        alert('Setup failed, please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -79,9 +84,7 @@ function SetAccount() {
       await refreshAndSubmit();
       goMainScreen();
     } catch (error) {
-      console.error('Error during submission:', error);
       setLoading(false);
-      alert('Setup failed, please try again.');
     }
   };
 

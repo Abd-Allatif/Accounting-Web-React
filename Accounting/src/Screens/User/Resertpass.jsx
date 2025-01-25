@@ -56,6 +56,7 @@ function Resetpass() {
     } catch (error) {
       setLoading(false);
       window.alert("An Error Happend while Resetting Your Password Please try Again Later");
+      location.reload();
     }
   };
 

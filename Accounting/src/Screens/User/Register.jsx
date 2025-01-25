@@ -58,6 +58,7 @@ function Register() {
 
     if(!validatePassword(password)){
       window.alert(t("passwordRegixError"));
+      setLoading(false);
     }
     else if (password !== confirmPassword || password == null || confirmPassword == null) {
       window.alert(t("passwordmatcherror"));

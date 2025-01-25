@@ -113,9 +113,10 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
 
                 setupAccount: "SetUp Your Account",
                 enterBudget: "Enter Budget (Required)",
-                insertTypes: "Insert Types (Not Required)",
-                insertExistingCustomer: "Insert Existing Customer Names (Not Required)",
-                insertExistingEmployees: "Insert Existing Employees (Not Required)",
+                insertTypes: "Insert Types (Optional)",
+                insertExistingCustomer: "Insert Existing Customer Names (Optional)",
+                insertExistingEmployees: "Insert Existing Employees (Optional)",
+                setupError:"Please Enter Budget",
 
                 submit: "Submit",
 
@@ -246,9 +247,10 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
 
                 setupAccount: "جهز حسابك",
                 enterBudget: "ادخل راس المال (مطلوب)",
-                insertTypes: "ادخل الاصناف (مطلوب)",
-                insertExistingCustomer: "ادخل الزبائن الموجودين (غير مطلوب)",
-                insertExistingEmployees: "ادخل الموظفين الموجودين (غير مطلوب)",
+                insertTypes: "ادخل الاصناف (اختياري)",
+                insertExistingCustomer: "ادخل الزبائن الموجودين (اختياري)",
+                insertExistingEmployees: "ادخل الموظفين الموجودين (اختياري)",
+                setupError:"الرجاء ادخال راس المال",
 
                 submit: "تاكيد",
 

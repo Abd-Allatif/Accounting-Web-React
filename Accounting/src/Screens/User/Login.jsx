@@ -76,6 +76,7 @@ function Login() {
       }
       catch (error) {
         window.alert('Invalid Credentials');
+        location.reload();
         setLoading(false);
       }
     }

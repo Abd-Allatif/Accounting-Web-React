@@ -1,19 +1,11 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState, useEffect, useCallback } from 'react';
+import { useState,} from 'react';
 import { useNavigate } from 'react-router-dom'
-import Loader from '../../Tools/Loader'
+import ExcelUploader from '../../Tools/ExcelUploader';
 import { refreshAccessToken } from '../../Tools/authService'
 import Drawer from '../../Tools/Drawer'
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "../../Tools/TableComponent"
+import { BackGround, Card, Button,TopBar } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function Options() {
@@ -98,6 +90,10 @@ function Options() {
                     <Button onClick={excelDownload} classNam="FirstRowBtn">{t("excel")}</Button>
                     <Button onClick={pdfDownload} className="FirstRowBtn">{t("pdf")}</Button>
                 </span>
+                <span className='FirstRow'>
+                <label className='FirstRowLabel'>{t("downloadData")}</label>
+                    <ExcelUploader username={userData.user_name}/>
+                </span>
             </Card>
         </BackGround>
     </StyledWrapper>)
@@ -122,6 +118,8 @@ const StyledWrapper = styled.div`
     margin-left: 0.5em;
     margin-right: 0.5em;
     margin-bottom: 5em;
+
+    overflow-y:auto;
 
     background-color: hsla(0, 0%, 9%, 0.788);
     backdrop-filter: blur(5px);
