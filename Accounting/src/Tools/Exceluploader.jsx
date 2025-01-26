@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { refreshAccessToken } from './authService'
+import { useTranslation } from 'react-i18next';
 
 
 const ExcelUploader = ({ username }) => {
@@ -9,6 +10,8 @@ const ExcelUploader = ({ username }) => {
   const [uploadStatus, setUploadStatus] = useState('');
   const [error, setError] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+
+  const {t} = useTranslation();
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
@@ -19,61 +22,47 @@ const ExcelUploader = ({ username }) => {
     }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e) => {
+    e.preventDefault();
     if (!selectedFile) {
-      setError('Please select a file first');
+      setError(t("excelerror1"));
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('file', selectedFile);
-  
-    try {
-      setIsUploading(true);
-      setError('');
-      setUploadStatus('Uploading...');
-  
-      const newAccessToken = await refreshAccessToken();
-  
-      // Updated endpoint URL to match corrected Django URL
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL_DATA_IMPORT}/${username}/`,  
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${newAccessToken}`,
-          }
+
+
+    setIsUploading(true);
+    setError('');
+    setUploadStatus('Uploading...');
+
+    const newAccessToken = await refreshAccessToken();
+
+    await axios.post(
+      `${import.meta.env.VITE_API_URL_DATA_IMPORT}/${username}/`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${newAccessToken}`,
         }
-      );
-  
-      if (response.data.results) {
-        const successSheets = Object.values(response.data.results).filter(
-          sheet => sheet.status === 'success'
-        ).length;
-        
-        const totalImported = Object.values(response.data.results)
-          .filter(sheet => sheet.status === 'success')
-          .reduce((sum, sheet) => sum + (sheet.count || 0), 0);
-  
-        setUploadStatus(`Imported ${totalImported} items across ${successSheets} sheets`);
       }
-  
-    } catch (err) {
-      const errorMessage = err.response?.data?.error || 
-                          err.response?.data?.results?.[0]?.message || 
-                          'Upload failed';
+    ).then(response => setUploadStatus(t("importedDataSuccess"))).catch(err => {
+      const errorMessage = err.response?.data?.error ||
+        err.response?.data?.results?.[0]?.message ||
+        t("uploadFailed");
       setError(errorMessage);
-      
-    } finally {
+    }).finally(() => {
       setIsUploading(false);
       setUploadStatus('');
       setTimeout(() => {
         setUploadStatus('');
         setError('');
       }, 10000);
-    }
+    });
   };
+
 
   return (
     <UploaderStyle>
@@ -87,7 +76,7 @@ const ExcelUploader = ({ username }) => {
             style={{ display: 'none' }}
           />
           <label htmlFor="excel-upload" className="upload-button">
-            {selectedFile ? selectedFile.name : 'Choose Excel File'}
+            {selectedFile ? selectedFile.name : t("chooseExcelFile")}
           </label>
         </div>
 
@@ -97,7 +86,7 @@ const ExcelUploader = ({ username }) => {
             disabled={isUploading}
             className="upload-submit-button"
           >
-            {isUploading ? 'Uploading...' : 'Upload Data'}
+            {isUploading ? t("uploading") : t("uploadData")}
           </button>
         )}
 

@@ -91,7 +91,7 @@ function Options() {
                     <Button onClick={pdfDownload} className="FirstRowBtn">{t("pdf")}</Button>
                 </span>
                 <span className='FirstRow'>
-                <label className='FirstRowLabel'>{t("downloadData")}</label>
+                <label className='FirstRowLabel'>{t("uploadData")}</label>
                     <ExcelUploader username={userData.user_name}/>
                 </span>
             </Card>

@@ -138,6 +138,15 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
 
                 excel:"Excel",
                 pdf:"PDF",
+
+                excelerror1: "Please select a file first",
+                uploading: "Uploading...",
+                importedDataSuccess: "Sheets Are Imported Successfully",
+                uploadFailed: "Upload failed",
+                chooseExcelFile:"Choose Excel File",
+                uploadData:"Upload Data",
+
+
             }
         },
         ar: {
@@ -271,6 +280,13 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
 
                 excel:"ملف اكسل",
                 pdf:"ملف PDF",
+
+                excelerror1: "الرجاء اختيار الملف اولا",
+                uploading: "يتم التحميل...",
+                importedDataSuccess: "تم استيراد الملف بنجاح",
+                uploadFailed: "فشل الاستيراد",
+                chooseExcelFile:"اختار ملف اكسل",
+                uploadData:"رفع البيانات",
             }
         }
     }
