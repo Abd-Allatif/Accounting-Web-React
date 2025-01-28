@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Tools/Loader'
 import { refreshAccessToken } from '../../Tools/authService'
-import { getTypes,debounce,searchType } from '../../Tools/BackendServices'
+import { getTypes, debounce, searchType } from '../../Tools/BackendServices'
 import Drawer from '../../Tools/Drawer'
-import { BackGround, Card, InputField, Button, SearchField,TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
 import {
     Table,
     TableBody,
@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 function Types() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -28,6 +28,7 @@ function Types() {
     const [editType, setEditType] = useState(null);
     const [editTypeValue, setEditTypeValue] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [showTable, setShowTable] = useState(false);
 
     const navigate = useNavigate();
 
@@ -45,11 +46,11 @@ function Types() {
     };
 
     const fetchTypes = () => {
-       getTypes(userData,setTypesData);
+        getTypes(userData, setTypesData);
     };
 
     const searchfetchTypes = async (query = '') => {
-        searchType(userData,query,setTypesData);
+        searchType(userData, query, setTypesData);
     };
 
     const debouncedFetchTypes = useCallback(debounce(searchfetchTypes, 300), []);
@@ -129,7 +130,7 @@ function Types() {
 
     return (<StyledWrapper>
         <BackGround className="Container">
-            <TopBar  drawerButton_Onclick={toggleDrawer(true)} backButton_Onclick={backToMain} Text={t("types")}  />
+            <TopBar drawerButton_Onclick={toggleDrawer(true)} backButton_Onclick={backToMain} Text={t("types")} />
             <Drawer isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
 
             <Card className="ItemsContainer">
@@ -150,44 +151,53 @@ function Types() {
                 </div>
             </Card>
 
-            <SearchField onClick={clearbtnClick} value={searchQuery} onChange={handleSearchChange} />
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead>{t("types")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {typesData.map((type, index) => (
-                        <TableRow key={index}>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editType === type.type ? (
-                                    <InputField
-                                        type="text"
-                                        value={editTypeValue}
-                                        onChange={(e) => setEditTypeValue(e.target.value)}
-                                    />
-                                ) : (
-                                    type.type
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editType === type.type ? (
-                                    <Button className='TableButton' onClick={() => updateType(type.type)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        setEditType(type.type);
-                                        setEditTypeValue(type.type);
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteType(type.type)}>{t("delete")}</Button>
-                            </TableCell>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField onClick={clearbtnClick} value={searchQuery} onChange={handleSearchChange} />
+
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead>{t("types")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {typesData.map((type, index) => (
+                            <TableRow key={index}>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editType === type.type ? (
+                                        <InputField
+                                            type="text"
+                                            value={editTypeValue}
+                                            onChange={(e) => setEditTypeValue(e.target.value)}
+                                        />
+                                    ) : (
+                                        type.type
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editType === type.type ? (
+                                        <Button className='TableButton' onClick={() => updateType(type.type)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            setEditType(type.type);
+                                            setEditTypeValue(type.type);
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteType(type.type)}>{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
         </BackGround>
     </StyledWrapper>)
 }
@@ -234,8 +244,44 @@ const StyledWrapper = styled.div`
     margin-top:1em;
 
     padding:1em;
-    height:6em;
-   
+    height:6em;  
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
+    }
 }
 
 .Secondrow{

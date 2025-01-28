@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 function MoneyIncome() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [moneyFrom, setmoneyFrom] = useState('');
@@ -36,6 +36,7 @@ function MoneyIncome() {
     const [customerData, setcustomerData] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(-1);
     const navigate = useNavigate();
+    const [showTable, setShowTable] = useState(false);
 
     const dropdownRef = useRef(null);
 
@@ -294,100 +295,107 @@ function MoneyIncome() {
                     {loading && <Loader width='3' height='20' animateHeight='36' />}
                 </div>
             </Card>
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <SearchField value={searchQuery} onChange={handleSearchChange} onClick={clear_btn} />
-
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead>{t("customer")}</TableHead>
-                        <TableHead>{t("total")}</TableHead>
-                        <TableHead>{t("date")}</TableHead>
-                        <TableHead>{t("notes")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {moneyIncomeData.map((income, index) => (
-                        <TableRow key={index}>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editIncomeID === income.id ? (
-                                    <div className="SearchCustomer">
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField value={searchQuery} onChange={handleSearchChange} onClick={clear_btn} />
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead>{t("customer")}</TableHead>
+                            <TableHead>{t("total")}</TableHead>
+                            <TableHead>{t("date")}</TableHead>
+                            <TableHead>{t("notes")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {moneyIncomeData.map((income, index) => (
+                            <TableRow key={index}>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editIncomeID === income.id ? (
+                                        <div className="SearchCustomer">
+                                            <InputField
+                                                className="Table-Input-Field"
+                                                type="text"
+                                                value={editIncome}
+                                                onChange={handleSearchEditCustomerChange}
+                                                onKeyDown={handleeditcustomerKeyDown}
+                                            />
+                                            {customerData.length > 0 && (
+                                                editIncome && <div className="dropdown" ref={dropdownRef}>
+                                                    {customerData.map((customer, index) => (
+                                                        <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleeditCustomerSelect(customer.customer_name)}>
+                                                            {customer.customer_name}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        income.money_from
+                                    )}
+                                </TableCell>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editIncomeID === income.id ? (
                                         <InputField
                                             className="Table-Input-Field"
                                             type="text"
-                                            value={editIncome}
-                                            onChange={handleSearchEditCustomerChange}
-                                            onKeyDown={handleeditcustomerKeyDown}
+                                            value={edittotal}
+                                            onChange={(e) => setEdittotal(e.target.value)}
                                         />
-                                        {customerData.length > 0 && (
-                                            editIncome && <div className="dropdown" ref={dropdownRef}>
-                                                {customerData.map((customer, index) => (
-                                                    <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleeditCustomerSelect(customer.customer_name)}>
-                                                        {customer.customer_name}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    income.money_from
-                                )}
-                            </TableCell>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editIncomeID === income.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={edittotal}
-                                        onChange={(e) => setEdittotal(e.target.value)}
-                                    />
-                                ) : (
-                                    income.total
-                                )}
-                            </TableCell>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editIncomeID === income.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="date"
-                                        value={editDate}
-                                        onChange={(e) => setEditDate(e.target.value)}
-                                    />
-                                ) : (
-                                    income.date
-                                )}
-                            </TableCell>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editIncomeID === income.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editNotes}
-                                        onChange={(e) => setEditNotes(e.target.value)}
-                                    />
-                                ) : (
-                                    income.notes
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editIncomeID === income.id ? (
-                                    <Button className='TableButton' onClick={() => editMoneyIncome(income.id)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        seteditIncomeID(income.id);
-                                        seteditIncome(income.money_from);
-                                        setEditDate(income.date);
-                                        setEdittotal(income.total);
-                                        setEditNotes(income.notes)
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteIncome(income.id)} >{t("delete")}</Button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                    ) : (
+                                        income.total
+                                    )}
+                                </TableCell>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editIncomeID === income.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="date"
+                                            value={editDate}
+                                            onChange={(e) => setEditDate(e.target.value)}
+                                        />
+                                    ) : (
+                                        income.date
+                                    )}
+                                </TableCell>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editIncomeID === income.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="text"
+                                            value={editNotes}
+                                            onChange={(e) => setEditNotes(e.target.value)}
+                                        />
+                                    ) : (
+                                        income.notes
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editIncomeID === income.id ? (
+                                        <Button className='TableButton' onClick={() => editMoneyIncome(income.id)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            seteditIncomeID(income.id);
+                                            seteditIncome(income.money_from);
+                                            setEditDate(income.date);
+                                            setEdittotal(income.total);
+                                            setEditNotes(income.notes)
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteIncome(income.id)} >{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
         </BackGround>
     </StyledWrapper>)
 }
@@ -443,6 +451,43 @@ const StyledWrapper = styled.div`
 
     .customerField{
         position: relative;
+    }
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
     }
 }
 

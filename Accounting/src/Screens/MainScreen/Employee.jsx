@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Tools/Loader'
 import { refreshAccessToken } from '../../Tools/authService'
-import { getEmployee, debounce,searchEmployee } from '../../Tools/BackendServices'
+import { getEmployee, debounce, searchEmployee } from '../../Tools/BackendServices'
 import Drawer from '../../Tools/Drawer'
 import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
 import {
@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 function Employee() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -31,7 +31,8 @@ function Employee() {
     const [editEmployeeID, seteditEmployeeID] = useState(null);
     const [editDate, setEditDate] = useState('');
     const [editSalary, setEditSalary] = useState('');
-    const [searchQuery,setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showTable, setShowTable] = useState(false);
     const navigate = useNavigate();
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
@@ -56,7 +57,7 @@ function Employee() {
     }, []);
 
     const searchfetchEmployee = async (query = '') => {
-        searchEmployee(userData,query,setEmployeeData);
+        searchEmployee(userData, query, setEmployeeData);
     };
 
     const debouncedFetchEmployee = useCallback(debounce(searchfetchEmployee, 300), []);
@@ -142,7 +143,7 @@ function Employee() {
         }
     };
 
-   
+
 
     return (<StyledWrapper>
         <BackGround className="Container">
@@ -170,74 +171,81 @@ function Employee() {
                     {loading && <Loader width='3' height='20' animateHeight='36' />}
                 </div>
             </Card>
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <SearchField value={searchQuery} onChange={handleSearchChange} onClick={clear_btn} />
-
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead>{t("employees")}</TableHead>
-                        <TableHead>{t("date")}</TableHead>
-                        <TableHead>{t("salary")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {employeeData.map((employee, index) => (
-                        <TableRow key={index}>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editEmployeeID === employee.employee_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editName}
-                                        onChange={(e) => setEditName(e.target.value)}
-                                    />
-                                ) : (
-                                    employee.employee_name
-                                )}
-                            </TableCell>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editEmployeeID === employee.employee_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="date"
-                                        value={editDate}
-                                        onChange={(e) => setEditDate(e.target.value)}
-                                    />
-                                ) : (
-                                    employee.date_of_employment
-                                )}
-                            </TableCell>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editEmployeeID === employee.employee_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editSalary}
-                                        onChange={(e) => setEditSalary(e.target.value)}
-                                    />
-                                ) : (
-                                    employee.salary
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editEmployeeID === employee.employee_name ? (
-                                    <Button className='TableButton' onClick={()=> editEmployee(employee.employee_name)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        seteditEmployeeID(employee.employee_name);
-                                        setEditName(employee.employee_name);
-                                        setEditDate(employee.date_of_employment);
-                                        setEditSalary(employee.salary);
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteEmployee(employee.employee_name)} >{t("delete")}</Button>
-                            </TableCell>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField value={searchQuery} onChange={handleSearchChange} onClick={clear_btn} />
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead>{t("employees")}</TableHead>
+                            <TableHead>{t("date")}</TableHead>
+                            <TableHead>{t("salary")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {employeeData.map((employee, index) => (
+                            <TableRow key={index}>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editEmployeeID === employee.employee_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="text"
+                                            value={editName}
+                                            onChange={(e) => setEditName(e.target.value)}
+                                        />
+                                    ) : (
+                                        employee.employee_name
+                                    )}
+                                </TableCell>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editEmployeeID === employee.employee_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="date"
+                                            value={editDate}
+                                            onChange={(e) => setEditDate(e.target.value)}
+                                        />
+                                    ) : (
+                                        employee.date_of_employment
+                                    )}
+                                </TableCell>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editEmployeeID === employee.employee_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="text"
+                                            value={editSalary}
+                                            onChange={(e) => setEditSalary(e.target.value)}
+                                        />
+                                    ) : (
+                                        employee.salary
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editEmployeeID === employee.employee_name ? (
+                                        <Button className='TableButton' onClick={() => editEmployee(employee.employee_name)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            seteditEmployeeID(employee.employee_name);
+                                            setEditName(employee.employee_name);
+                                            setEditDate(employee.date_of_employment);
+                                            setEditSalary(employee.salary);
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteEmployee(employee.employee_name)} >{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
         </BackGround>
     </StyledWrapper>)
 }
@@ -289,6 +297,43 @@ const StyledWrapper = styled.div`
    
     .first-field{
         margin:1em;
+    }
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
     }
 }
 

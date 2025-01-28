@@ -265,8 +265,8 @@ const SearchFieldStyle = styled.div`
 
         padding: 0.6em;
         padding-left: 0.5em;
-    
-        width:100vw;
+
+        width:85vw;
         height:6vh;
     
         border: none;
@@ -322,8 +322,11 @@ const SearchFieldStyle = styled.div`
         padding-bottom: 1.5em;
         padding-top: 1.5em;
 
+        width:73vw;
+
         .Search {
             padding: 0.5em;
+           
         }
 
         .SearchBtn{

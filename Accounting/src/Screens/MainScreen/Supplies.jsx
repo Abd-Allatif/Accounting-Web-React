@@ -22,7 +22,7 @@ import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../..
 import { useTranslation } from 'react-i18next';
 
 function Supplies() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [typesData, setTypesData] = useState([]);
@@ -48,6 +48,7 @@ function Supplies() {
         sell_price: ''
     });
     const [newSupply, setNewSupply] = useState('');
+    const [showTable,setShowTable] = useState(false);
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
 
@@ -348,134 +349,142 @@ function Supplies() {
                 <div className="Fourthrow">
                     <Button onClick={send_data}>{t("addSupply")}</Button>
                 </div>
-
             </Card>
 
-            <SearchField onClick={clearButton} value={search} onChange={handlesuppliesSearchChange} ></SearchField>
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead onClick={navigatetoTypes} style={{ cursor: "pointer" }}>{t("type")}</TableHead>
-                        <TableHead>{t("supply")}</TableHead>
-                        <TableHead>{t("Unit")}</TableHead>
-                        <TableHead>{t("countity")}</TableHead>
-                        <TableHead>{t("buyPrice")}</TableHead>
-                        <TableHead>{t("sellPrice")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {suppliesData.map((supply, index) => (
-                        <TableRow key={index}>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSupplyId === supply.supply_name ? (
-                                    <div className='editTypeContainer'>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField onClick={clearButton} value={search} onChange={handlesuppliesSearchChange} ></SearchField>
+
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead onClick={navigatetoTypes} style={{ cursor: "pointer" }}>{t("type")}</TableHead>
+                            <TableHead>{t("supply")}</TableHead>
+                            <TableHead>{t("Unit")}</TableHead>
+                            <TableHead>{t("countity")}</TableHead>
+                            <TableHead>{t("buyPrice")}</TableHead>
+                            <TableHead>{t("sellPrice")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {suppliesData.map((supply, index) => (
+                            <TableRow key={index}>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSupplyId === supply.supply_name ? (
+                                        <div className='editTypeContainer'>
+                                            <InputField
+                                                className="Table-Input-Field"
+                                                type="text"
+                                                value={editSearchType}
+                                                onChange={handleSearchEditTypeChange}
+                                                onKeyDown={handleEditTypeKeyDown}
+                                            />
+                                            {editTypesData.length > 0 && (
+                                                editSearchType && <div className="dropdown" ref={dropdownRef}>
+                                                    {editTypesData.map((type, index) => (
+                                                        <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditTypeSelect(type.type)}>
+                                                            {type.type}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                        </div>
+                                    ) : (
+                                        supply.type
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSupplyId === supply.supply_name ? (
                                         <InputField
                                             className="Table-Input-Field"
                                             type="text"
-                                            value={editSearchType}
-                                            onChange={handleSearchEditTypeChange}
-                                            onKeyDown={handleEditTypeKeyDown}
+                                            value={newSupply}
+                                            onChange={(e) => setNewSupply(e.target.value)}
                                         />
-                                        {editTypesData.length > 0 && (
-                                            editSearchType && <div className="dropdown" ref={dropdownRef}>
-                                                {editTypesData.map((type, index) => (
-                                                    <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditTypeSelect(type.type)}>
-                                                        {type.type}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-
-                                    </div>
-                                ) : (
-                                    supply.type
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSupplyId === supply.supply_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={newSupply}
-                                        onChange={(e) => setNewSupply(e.target.value)}
-                                    />
-                                ) : (
-                                    supply.supply_name
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSupplyId === supply.supply_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editSupplyValue.unit}
-                                        onChange={(e) => setEditSupplyValue({ ...editSupplyValue, unit: e.target.value })}
-                                    />
-                                ) : (
-                                    supply.unit
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSupplyId === supply.supply_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editSupplyValue.countity}
-                                        onChange={(e) => setEditSupplyValue({ ...editSupplyValue, countity: e.target.value })}
-                                    />
-                                ) : (
-                                    supply.countity
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSupplyId === supply.supply_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editSupplyValue.buy_price}
-                                        onChange={(e) => setEditSupplyValue({ ...editSupplyValue, buy_price: e.target.value })}
-                                    />
-                                ) : (
-                                    supply.buy_price
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSupplyId === supply.supply_name ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editSupplyValue.sell_price}
-                                        onChange={(e) => setEditSupplyValue({ ...editSupplyValue, sell_price: e.target.value })}
-                                    />
-                                ) : (
-                                    supply.sell_price
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editSupplyId === supply.supply_name ? (
-                                    <Button className='TableButton' onClick={() => saveSupply(supply.supply_name)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        setNewSupply(supply.supply_name)
-                                        setEditSupplyId(supply.supply_name);
-                                        setEditSearchType(supply.type);
-                                        setEditSupplyValue({
-                                            supply_name: supply.supply_name,
-                                            unit: supply.unit,
-                                            countity: supply.countity,
-                                            buy_price: supply.buy_price,
-                                            sell_price: supply.sell_price
-                                        });
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteSupply(supply.supply_name)}>{t("delete")}</Button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                    ) : (
+                                        supply.supply_name
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSupplyId === supply.supply_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="text"
+                                            value={editSupplyValue.unit}
+                                            onChange={(e) => setEditSupplyValue({ ...editSupplyValue, unit: e.target.value })}
+                                        />
+                                    ) : (
+                                        supply.unit
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSupplyId === supply.supply_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editSupplyValue.countity}
+                                            onChange={(e) => setEditSupplyValue({ ...editSupplyValue, countity: e.target.value })}
+                                        />
+                                    ) : (
+                                        supply.countity
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSupplyId === supply.supply_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editSupplyValue.buy_price}
+                                            onChange={(e) => setEditSupplyValue({ ...editSupplyValue, buy_price: e.target.value })}
+                                        />
+                                    ) : (
+                                        supply.buy_price
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSupplyId === supply.supply_name ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editSupplyValue.sell_price}
+                                            onChange={(e) => setEditSupplyValue({ ...editSupplyValue, sell_price: e.target.value })}
+                                        />
+                                    ) : (
+                                        supply.sell_price
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editSupplyId === supply.supply_name ? (
+                                        <Button className='TableButton' onClick={() => saveSupply(supply.supply_name)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            setNewSupply(supply.supply_name)
+                                            setEditSupplyId(supply.supply_name);
+                                            setEditSearchType(supply.type);
+                                            setEditSupplyValue({
+                                                supply_name: supply.supply_name,
+                                                unit: supply.unit,
+                                                countity: supply.countity,
+                                                buy_price: supply.buy_price,
+                                                sell_price: supply.sell_price
+                                            });
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteSupply(supply.supply_name)}>{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
         </BackGround>
     </StyledWrapper >)
 }
@@ -525,6 +534,43 @@ header{
 
     .typeField{
         position: relative;
+    }
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
     }
 }
 

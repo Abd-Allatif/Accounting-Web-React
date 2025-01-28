@@ -22,7 +22,7 @@ import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../..
 import { useTranslation } from 'react-i18next';
 
 function DispatchSupplies() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [searchSupplies, setSearchSupplies] = useState("");
@@ -51,6 +51,7 @@ function DispatchSupplies() {
         reason: '',
     });
     const [searchDispatched, setsearchDispatched] = useState('');
+    const [showTable, setShowTable] = useState(false);
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
 
@@ -345,120 +346,130 @@ function DispatchSupplies() {
                 </div>
             </Card>
 
-            <SearchField onClick={clearButton} value={searchDispatched} onChange={handleSellsSearch} ></SearchField>
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead onClick={navigatetoSupplies} style={{ cursor: "pointer" }}>{t("supply")}</TableHead>
-                        <TableHead>{t("countity")}</TableHead>
-                        <TableHead>{t("buyPrice")}</TableHead>
-                        <TableHead>{t("date")}</TableHead>
-                        <TableHead>{t("reason")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {dispatchData.map((dispatch, index) => (
-                        <TableRow key={index}>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editDispatchID === dispatch.id ? (
-                                    <div className='editSupplyContainer'>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField onClick={clearButton} value={searchDispatched} onChange={handleSellsSearch} ></SearchField>
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead onClick={navigatetoSupplies} style={{ cursor: "pointer" }}>{t("supply")}</TableHead>
+                            <TableHead>{t("countity")}</TableHead>
+                            <TableHead>{t("buyPrice")}</TableHead>
+                            <TableHead>{t("date")}</TableHead>
+                            <TableHead>{t("reason")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {dispatchData.map((dispatch, index) => (
+                            <TableRow key={index}>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editDispatchID === dispatch.id ? (
+                                        <div className='editSupplyContainer'>
+                                            <InputField
+                                                className="Table-Input-Field"
+                                                type="text"
+                                                value={searchEditSupplies}
+                                                onChange={handleSearchEditSupplies}
+                                                onKeyDown={handleEditSuppliesKeyDown}
+                                            />
+                                            {
+                                                searchEditSupplies && <>
+                                                    {editsuppliesData.length > 0 && (
+                                                        searchEditSupplies && <div className="dropdown" ref={dropdownRef}>
+                                                            {editsuppliesData.map((supply, index) => (
+                                                                <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditSuppliesSelect(supply.supply_name)}>
+                                                                    {supply.supply_name}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </>
+                                            }
+                                        </div>
+                                    ) : (
+                                        dispatch.supply
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editDispatchID === dispatch.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editDispatchData.countity}
+                                            onChange={(e) => seteditDispatchData({ ...editDispatchData, countity: e.target.value })}
+                                        />
+                                    ) : (
+                                        dispatch.countity
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editDispatchID === dispatch.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editDispatchData.buy_price}
+                                            onChange={(e) => seteditDispatchData({ ...editDispatchData, buy_price: e.target.value })}
+                                        />
+                                    ) : (
+                                        dispatch.buy_price
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editDispatchID === dispatch.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="date"
+                                            value={editDispatchData.dispatch_date}
+                                            onChange={(e) => seteditDispatchData({ ...editDispatchData, dispatch_date: e.target.value })}
+                                        />
+                                    ) : (
+                                        dispatch.dispatch_date
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editDispatchID === dispatch.id ? (
                                         <InputField
                                             className="Table-Input-Field"
                                             type="text"
-                                            value={searchEditSupplies}
-                                            onChange={handleSearchEditSupplies}
-                                            onKeyDown={handleEditSuppliesKeyDown}
+                                            value={editDispatchData.reason}
+                                            onChange={(e) => seteditDispatchData({ ...editDispatchData, reason: e.target.value })}
                                         />
-                                        {
-                                            searchEditSupplies && <>
-                                                {editsuppliesData.length > 0 && (
-                                                    searchEditSupplies && <div className="dropdown" ref={dropdownRef}>
-                                                        {editsuppliesData.map((supply, index) => (
-                                                            <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditSuppliesSelect(supply.supply_name)}>
-                                                                {supply.supply_name}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </>
-                                        }
-                                    </div>
-                                ) : (
-                                    dispatch.supply
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editDispatchID === dispatch.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editDispatchData.countity}
-                                        onChange={(e) => seteditDispatchData({ ...editDispatchData, countity: e.target.value })}
-                                    />
-                                ) : (
-                                    dispatch.countity
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editDispatchID === dispatch.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editDispatchData.buy_price}
-                                        onChange={(e) => seteditDispatchData({ ...editDispatchData, buy_price: e.target.value })}
-                                    />
-                                ) : (
-                                    dispatch.buy_price
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editDispatchID === dispatch.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="date"
-                                        value={editDispatchData.dispatch_date}
-                                        onChange={(e) => seteditDispatchData({ ...editDispatchData, dispatch_date: e.target.value })}
-                                    />
-                                ) : (
-                                    dispatch.dispatch_date
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editDispatchID === dispatch.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editDispatchData.reason}
-                                        onChange={(e) => seteditDispatchData({ ...editDispatchData, reason: e.target.value })}
-                                    />
-                                ) : (
-                                    dispatch.reason
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editDispatchID === dispatch.id ? (
-                                    <Button className='TableButton' onClick={() => editDispatch(dispatch.id)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        seteditDispatchID(dispatch.id);
-                                        setSearchEditSupplies(dispatch.supply);
-                                        seteditDispatchData({
-                                            id: dispatch.id,
-                                            countity: dispatch.countity,
-                                            buy_price: dispatch.buy_price,
-                                            dispatch_date: dispatch.dispatch_date,
-                                            reason: dispatch.reason,
-                                        });
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteDispatch(dispatch.id)}>{t("delete")}</Button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                    ) : (
+                                        dispatch.reason
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editDispatchID === dispatch.id ? (
+                                        <Button className='TableButton' onClick={() => editDispatch(dispatch.id)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            seteditDispatchID(dispatch.id);
+                                            setSearchEditSupplies(dispatch.supply);
+                                            seteditDispatchData({
+                                                id: dispatch.id,
+                                                countity: dispatch.countity,
+                                                buy_price: dispatch.buy_price,
+                                                dispatch_date: dispatch.dispatch_date,
+                                                reason: dispatch.reason,
+                                            });
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteDispatch(dispatch.id)}>{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
+
+
         </BackGround>
     </StyledWrapper >)
 }
@@ -487,6 +498,43 @@ header{
 
         width:43vw;
         height: 55vh;
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
+    }
 }
 
 .Firstrow{

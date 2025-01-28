@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
 import { refreshAccessToken } from '../../Tools/authService'
-import { debounce, getInventories, searchBy_only_Supplies ,search_inventory} from '../../Tools/BackendServices'
+import { debounce, getInventories, searchBy_only_Supplies, search_inventory } from '../../Tools/BackendServices'
 import Drawer from '../../Tools/Drawer'
 import styled from 'styled-components';
 import {
@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const Inventory = () => {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -29,7 +29,8 @@ const Inventory = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [inventoryAdded, setInventoryAdded] = useState('');
-    const [searchInventory,setSearchInventory] = useState('');
+    const [searchInventory, setSearchInventory] = useState('');
+    const [showTable,setShowTable] = useState(false);
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
 
@@ -156,7 +157,8 @@ const Inventory = () => {
             }
         }).then(response => {
             setInventoryAdded(`${supply} Inventory Generated Successfully`);
-            fetchInventories()
+            fetchInventories();
+            location.reload();
         }).catch(error => {
             alert("An Error Happend Please Wait and Try Again");
         });
@@ -172,6 +174,7 @@ const Inventory = () => {
             }
         }).then(response => {
             fetchInventories();
+            location.reload();
         }).catch(error => {
             alert("An Error Happened. Please Wait and Try Again.");
         });
@@ -214,34 +217,46 @@ const Inventory = () => {
 
                     </div>
 
+                    <div className='Fourthrow'>
+                        {inventoryAdded && <p style={{ color: 'white' }}>{inventoryAdded}</p>}
+                    </div>
+
                     <div className="Fourthrow">
                         <Button className="Generate Inventory" onClick={send_data}>{t("generate")}</Button>
                     </div>
                 </Card>
 
-                <SearchField value={searchInventory} onChange={handleInventorySearch} onClick={clearBtn} />
+                <footer>
+                    <div className="FooterCard">
+                        <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                    </div>
+                </footer>
 
-                <Table className='Table'>
-                    <TableHeader className='TableHeader'>
-                        <TableRow className="Tablehead">
-                            <TableHead>{t("inventory")}</TableHead>
-                            <TableHead>{t("actions")}</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody className="Tablebody">
-                        {inventories.map(inventory => (
-                            <TableRow key={inventory.id}>
-                                <TableCell className='Name'>
-                                    {inventory.supply} - {inventory.start_date} {"-->>"} {inventory.end_date}
-                                </TableCell>
-                                <TableCell className='ButtonsCell'>
-                                    <Button className='TableButton' onClick={() => handleShow(inventory)}>{t("show")}</Button>
-                                    <Button className='TableButton' onClick={() => deleteInventory(inventory.id)}>{t("delete")}</Button>
-                                </TableCell>
+                {showTable && <div className='dataScreen'>
+                    <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                    <SearchField value={searchInventory} onChange={handleInventorySearch} onClick={clearBtn} />
+                    <Table className='Table'>
+                        <TableHeader className='TableHeader'>
+                            <TableRow className="Tablehead">
+                                <TableHead>{t("inventory")}</TableHead>
+                                <TableHead>{t("actions")}</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody className="Tablebody">
+                            {inventories.map(inventory => (
+                                <TableRow key={inventory.id}>
+                                    <TableCell className='Name'>
+                                        {inventory.supply} - {inventory.start_date} {"-->>"} {inventory.end_date}
+                                    </TableCell>
+                                    <TableCell className='ButtonsCell'>
+                                        <Button className='TableButton' onClick={() => handleShow(inventory)}>{t("show")}</Button>
+                                        <Button className='TableButton' onClick={() => deleteInventory(inventory.id)}>{t("delete")}</Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>}
 
                 {selectedInventory && (
                     <div className='SubScreen'>
@@ -369,6 +384,44 @@ const StyledWrapper = styled.div`
     background-color :hsla(0, 0%, 9%, 0.788);
     padding: 2em;
     border: 1px solid #ccc;
+    border-radius:20px;
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
+    }
 }
 
 .TableContainer{

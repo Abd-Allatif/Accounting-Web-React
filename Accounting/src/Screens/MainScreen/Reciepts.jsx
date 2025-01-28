@@ -21,7 +21,7 @@ import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../..
 import { useTranslation } from 'react-i18next';
 
 function Reciepts() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [searchTypes, setSearchtype] = useState("");
@@ -32,7 +32,7 @@ function Reciepts() {
     const [countity, setCountity] = useState('');
     const [buy_price, setBuyPrice] = useState('');
     const [sell_price, setSellPrice] = useState('');
-    const [date,setDate] = useState('');
+    const [date, setDate] = useState('');
     const [notes, setNotes] = useState('');
     const [recieptAdded, setRecieptAdded] = useState('');
     const [recieptsData, setRecieptsData] = useState([{
@@ -41,7 +41,7 @@ function Reciepts() {
         countity: '',
         buy_price: '',
         sell_price: '',
-        date:'',
+        date: '',
         notes: '',
     }]);
     const [editRecieptId, setEditRecieptId] = useState(null);
@@ -52,10 +52,11 @@ function Reciepts() {
         countity: '',
         buy_price: '',
         sell_price: '',
-        date:'',
+        date: '',
         notes: '',
     });
     const [searchTypesAndSupplies, setSearchTypesAndSupplies] = useState('');
+    const [showTable,setShowTable] = useState(false);
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
 
@@ -289,7 +290,7 @@ function Reciepts() {
             countity: countity,
             buy_price: buy_price,
             sell_price: sell_price,
-            date:date,
+            date: date,
             notes: notes,
         }, {
             headers: {
@@ -304,7 +305,7 @@ function Reciepts() {
                 countity: countity,
                 buy_price: buy_price,
                 sell_price: sell_price,
-                date:date,
+                date: date,
                 notes: notes,
             }])
             setSearchtype('');
@@ -462,164 +463,174 @@ function Reciepts() {
                 </div>
             </Card>
 
-            <SearchField onClick={clearButton} value={searchTypesAndSupplies} onChange={hanldeRecieptSearch} ></SearchField>
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead onClick={navigatetoTypes} style={{ cursor: "pointer" }}>{t("types")}</TableHead>
-                        <TableHead onClick={navigatetoSupplies} style={{ cursor: "pointer" }}>{t("supplies")}</TableHead>
-                        <TableHead>{t("countity")}</TableHead>
-                        <TableHead>{t("buyPrice")}</TableHead>
-                        <TableHead>{t("sellPrice")}</TableHead>
-                        <TableHead>{t("total")}</TableHead>
-                        <TableHead>{t("date")}</TableHead>
-                        <TableHead>{t("notes")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {recieptsData.map((reciept, index) => (
-                        <TableRow key={index}>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <div className="editTypeContainer">
-                                        <InputField
-                                            className="Table-Input-Field"
-                                            type="text"
-                                            value={editSearchType}
-                                            onChange={handleSearchEditTypeChange}
-                                            onKeyDown={handleEditTypeKeyDown}
-                                        />
-                                        {typesData.length > 0 && (
-                                            editSearchType && <div className="dropdown" ref={dropdownRef}>
-                                                {typesData.map((type, index) => (
-                                                    <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditTypeSelect(type.type)}>
-                                                        {type.type}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                ) : (
-                                    reciept.type
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <div className="editSupplyContainer">
-                                        <InputField
-                                            className="Table-Input-Field"
-                                            type="text"
-                                            value={searchEditSupplies}
-                                            onChange={handleSearchEditSupplies}
-                                            onKeyDown={handleEditSuppliesKeyDown}
-                                        />
-                                        {
-                                            searchEditSupplies && <>
-                                                {suppliesData.length > 0 && (
-                                                    searchEditSupplies && <div className="dropdown" ref={dropdownRef}>
-                                                        {suppliesData.map((supply, index) => (
-                                                            <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditSuppliesSelect(supply.supply_name)}>
-                                                                {supply.supply_name}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </>
-                                        }
-                                    </div>
-                                ) : (
-                                    reciept.supply
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editRecieptsData.countity}
-                                        onChange={(e) => setEditRecieptsData({ ...editRecieptsData, countity: e.target.value })}
-                                    />
-                                ) : (
-                                    reciept.countity
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editRecieptsData.buy_price}
-                                        onChange={(e) => setEditRecieptsData({ ...editRecieptsData, buy_price: e.target.value })}
-                                    />
-                                ) : (
-                                    reciept.buy_price
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editRecieptsData.sell_price}
-                                        onChange={(e) => setEditRecieptsData({ ...editRecieptsData, sell_price: e.target.value })}
-                                    />
-                                ) : (
-                                    reciept.sell_price
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {reciept.total}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="date"
-                                        value={editRecieptsData.date}
-                                        onChange={(e) => setEditRecieptsData({ ...editRecieptsData, date: e.target.value })}
-                                    />
-                                ) : (
-                                    reciept.date
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editRecieptId === reciept.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editRecieptsData.notes}
-                                        onChange={(e) => setEditRecieptsData({ ...editRecieptsData, notes: e.target.value })}
-                                    />
-                                ) : (
-                                    reciept.notes
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editRecieptId === reciept.id ? (
-                                    <Button className='TableButton' onClick={() => editReciept(reciept.id)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        setEditRecieptId(reciept.id);
-                                        setEditSearchType(reciept.type);
-                                        setSearchEditSupplies(reciept.supply);
-                                        setEditRecieptsData({
-                                            id: reciept.id,
-                                            countity: reciept.countity,
-                                            buy_price: reciept.buy_price,
-                                            sell_price: reciept.sell_price,
-                                            date:reciept.date,
-                                            notes: reciept.notes
-                                        });
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteReciept(reciept.id)}>{t("delete")}</Button>
-                            </TableCell>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField onClick={clearButton} value={searchTypesAndSupplies} onChange={hanldeRecieptSearch} ></SearchField>
+
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead onClick={navigatetoTypes} style={{ cursor: "pointer" }}>{t("types")}</TableHead>
+                            <TableHead onClick={navigatetoSupplies} style={{ cursor: "pointer" }}>{t("supplies")}</TableHead>
+                            <TableHead>{t("countity")}</TableHead>
+                            <TableHead>{t("buyPrice")}</TableHead>
+                            <TableHead>{t("sellPrice")}</TableHead>
+                            <TableHead>{t("total")}</TableHead>
+                            <TableHead>{t("date")}</TableHead>
+                            <TableHead>{t("notes")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {recieptsData.map((reciept, index) => (
+                            <TableRow key={index}>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <div className="editTypeContainer">
+                                            <InputField
+                                                className="Table-Input-Field"
+                                                type="text"
+                                                value={editSearchType}
+                                                onChange={handleSearchEditTypeChange}
+                                                onKeyDown={handleEditTypeKeyDown}
+                                            />
+                                            {typesData.length > 0 && (
+                                                editSearchType && <div className="dropdown" ref={dropdownRef}>
+                                                    {typesData.map((type, index) => (
+                                                        <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditTypeSelect(type.type)}>
+                                                            {type.type}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        reciept.type
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <div className="editSupplyContainer">
+                                            <InputField
+                                                className="Table-Input-Field"
+                                                type="text"
+                                                value={searchEditSupplies}
+                                                onChange={handleSearchEditSupplies}
+                                                onKeyDown={handleEditSuppliesKeyDown}
+                                            />
+                                            {
+                                                searchEditSupplies && <>
+                                                    {suppliesData.length > 0 && (
+                                                        searchEditSupplies && <div className="dropdown" ref={dropdownRef}>
+                                                            {suppliesData.map((supply, index) => (
+                                                                <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditSuppliesSelect(supply.supply_name)}>
+                                                                    {supply.supply_name}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </>
+                                            }
+                                        </div>
+                                    ) : (
+                                        reciept.supply
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editRecieptsData.countity}
+                                            onChange={(e) => setEditRecieptsData({ ...editRecieptsData, countity: e.target.value })}
+                                        />
+                                    ) : (
+                                        reciept.countity
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editRecieptsData.buy_price}
+                                            onChange={(e) => setEditRecieptsData({ ...editRecieptsData, buy_price: e.target.value })}
+                                        />
+                                    ) : (
+                                        reciept.buy_price
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editRecieptsData.sell_price}
+                                            onChange={(e) => setEditRecieptsData({ ...editRecieptsData, sell_price: e.target.value })}
+                                        />
+                                    ) : (
+                                        reciept.sell_price
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {reciept.total}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="date"
+                                            value={editRecieptsData.date}
+                                            onChange={(e) => setEditRecieptsData({ ...editRecieptsData, date: e.target.value })}
+                                        />
+                                    ) : (
+                                        reciept.date
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editRecieptId === reciept.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="text"
+                                            value={editRecieptsData.notes}
+                                            onChange={(e) => setEditRecieptsData({ ...editRecieptsData, notes: e.target.value })}
+                                        />
+                                    ) : (
+                                        reciept.notes
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editRecieptId === reciept.id ? (
+                                        <Button className='TableButton' onClick={() => editReciept(reciept.id)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            setEditRecieptId(reciept.id);
+                                            setEditSearchType(reciept.type);
+                                            setSearchEditSupplies(reciept.supply);
+                                            setEditRecieptsData({
+                                                id: reciept.id,
+                                                countity: reciept.countity,
+                                                buy_price: reciept.buy_price,
+                                                sell_price: reciept.sell_price,
+                                                date: reciept.date,
+                                                notes: reciept.notes
+                                            });
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteReciept(reciept.id)}>{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
+
         </BackGround>
     </StyledWrapper >)
 }
@@ -673,6 +684,43 @@ header{
 
     .supplyField{
         position: relative;
+    }
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
     }
 }
 

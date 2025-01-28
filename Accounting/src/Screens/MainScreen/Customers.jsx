@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Tools/Loader'
 import { refreshAccessToken } from '../../Tools/authService'
-import { getCustomers,debounce,searchCustomer } from '../../Tools/BackendServices'
+import { getCustomers, debounce, searchCustomer } from '../../Tools/BackendServices'
 import Drawer from '../../Tools/Drawer'
-import { BackGround, Card, InputField, Button, SearchField,TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
 import {
     Table,
     TableBody,
@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 function Customers() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -28,6 +28,7 @@ function Customers() {
     const [editCustomer, seteditCustomer] = useState(null);
     const [editCustomerValue, seteditCustomerValue] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [showTable, setShowTable] = useState(false);
 
     const navigate = useNavigate();
 
@@ -45,11 +46,11 @@ function Customers() {
     };
 
     const fetchCustomers = () => {
-       getCustomers(userData,setcustomerData);
+        getCustomers(userData, setcustomerData);
     };
 
     const searchfetchCustomers = async (query = '') => {
-        searchCustomer(userData,query,setcustomerData);
+        searchCustomer(userData, query, setcustomerData);
     };
 
     const debouncedFetchCustomers = useCallback(debounce(searchfetchCustomers, 300), []);
@@ -130,7 +131,7 @@ function Customers() {
 
     return (<StyledWrapper>
         <BackGround className="Container">
-            <TopBar  drawerButton_Onclick={toggleDrawer(true)} backButton_Onclick={backToMain} Text={t("customers")}  />
+            <TopBar drawerButton_Onclick={toggleDrawer(true)} backButton_Onclick={backToMain} Text={t("customers")} />
             <Drawer isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
 
             <Card className="ItemsContainer">
@@ -151,48 +152,57 @@ function Customers() {
                 </div>
             </Card>
 
-            <SearchField onClick={clearbtnClick} value={searchQuery} onChange={handleSearchChange} />
+            <footer>
+                <div className="FooterCard">
+                    <Button className="showDatabtn" onClick={() => setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead>{t("customers")}</TableHead>
-                        <TableHead>{t("totalDebt")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {customerData.map((customer, index) => (
-                        <TableRow key={index}>
-                            <TableCell style={{ fontSize: '20px', padding: '10px' }}>
-                                {editCustomer === customer.customer_name ? (
-                                    <InputField
-                                        type="text"
-                                        value={editCustomerValue}
-                                        onChange={(e) => seteditCustomerValue(e.target.value)}
-                                    />
-                                ) : (
-                                    customer.customer_name
-                                )}
-                            </TableCell>
-                            <TableCell className="totaldebt" style={{ fontSize: '20px', padding: '10px' }}>
-                                    {customer.total_debt}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editCustomer === customer.customer_name ? (
-                                    <Button className='TableButton' onClick={() => edit_Customer(customer.customer_name)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        seteditCustomer(customer.customer_name);
-                                        seteditCustomerValue(customer.customer_name);
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteCustomer(customer.customer_name)}>{t("delete")}</Button>
-                            </TableCell>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={() => setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField onClick={clearbtnClick} value={searchQuery} onChange={handleSearchChange} />
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead>{t("customers")}</TableHead>
+                            <TableHead>{t("totalDebt")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {customerData.map((customer, index) => (
+                            <TableRow key={index}>
+                                <TableCell style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editCustomer === customer.customer_name ? (
+                                        <InputField
+                                            type="text"
+                                            value={editCustomerValue}
+                                            onChange={(e) => seteditCustomerValue(e.target.value)}
+                                        />
+                                    ) : (
+                                        customer.customer_name
+                                    )}
+                                </TableCell>
+                                <TableCell className="totaldebt" style={{ fontSize: '20px', padding: '10px' }}>
+                                    {customer.total_debt}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editCustomer === customer.customer_name ? (
+                                        <Button className='TableButton' onClick={() => edit_Customer(customer.customer_name)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            seteditCustomer(customer.customer_name);
+                                            seteditCustomerValue(customer.customer_name);
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteCustomer(customer.customer_name)}>{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
+
         </BackGround>
     </StyledWrapper>)
 }
@@ -228,6 +238,43 @@ const StyledWrapper = styled.div`
     height: 35vh;
 
      box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+       
+    border-radius:20px;
+    
+    .dataScreenbtn{
+        margin-bottom:1em;
+    }
 }
 
 .Firstrow{

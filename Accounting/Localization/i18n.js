@@ -146,7 +146,7 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
                 chooseExcelFile:"Choose Excel File",
                 uploadData:"Upload Data",
 
-
+                showdata:"Show Data",
             }
         },
         ar: {
@@ -287,6 +287,8 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
                 uploadFailed: "فشل الاستيراد",
                 chooseExcelFile:"اختار ملف اكسل",
                 uploadData:"رفع البيانات",
+
+                showdata:"اظهار البيانات",
             }
         }
     }

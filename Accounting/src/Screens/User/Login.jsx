@@ -15,7 +15,7 @@ function Login() {
   const [userData, setUserData] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem('issatup');
+    const user = localStorage.getItem('user_data');
     setUserData(JSON.parse(user));
   }, [])
 
@@ -59,20 +59,9 @@ function Login() {
     }
     else {
       try {
-        await login(identifier, password);
+        await login(identifier, password,goMainScreen,goSetupAccount);
         window.alert('Login Successful');
         setLoading(false);
-
-        try {
-          if (userData) {
-            goMainScreen();
-          }
-          else {
-            goSetupAccount();
-          }
-        } catch (error) {
-          window.alert("Couldn't Get Your Data Please Register Or Refresh The Page");
-        }
       }
       catch (error) {
         window.alert('Invalid Credentials');

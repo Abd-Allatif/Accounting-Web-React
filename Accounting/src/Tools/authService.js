@@ -2,13 +2,19 @@ import axios from 'axios';
 
 const API_URL = `${import.meta.env.VITE_API_URL}`;
 
-export const login = async (identifier, password) => {
+export const login = async (identifier, password,navigate1,navigate2) => {
   const response = await axios.post(`${API_URL}/token/`, { identifier, password });
   if (response.data.access) {
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
-    localStorage.setItem('issatup',response.data.user.issatup);
     localStorage.setItem('user_data', JSON.stringify(response.data.user));
+
+    if (response.data.user.issatup) {
+      navigate1();
+    }
+    else {
+      navigate2();
+    }
   }
   
   return response.data;

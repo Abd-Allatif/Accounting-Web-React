@@ -21,7 +21,7 @@ import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../..
 import { useTranslation } from 'react-i18next';
 
 function MainSellScreen() {
-    const { t} = useTranslation();
+    const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [searchSupplies, setSearchSupplies] = useState("");
@@ -41,7 +41,7 @@ function MainSellScreen() {
         notes: '',
     }]);
     const [editSellID, setEditSellID] = useState(null);
-    const [searchEditSupplies,setSearchEditSupplies] = useState('');
+    const [searchEditSupplies, setSearchEditSupplies] = useState('');
     const [editsellData, setEditsellData] = useState({
         id: '',
         countity: '',
@@ -50,6 +50,7 @@ function MainSellScreen() {
         notes: '',
     });
     const [searchSells, setSearchSells] = useState('');
+    const [showTable,setShowTable] = useState(false)
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
 
@@ -351,125 +352,133 @@ function MainSellScreen() {
                     <Button onClick={send_data} >{t("sell")}</Button>
                 </div>
             </Card>
+            <footer>
+                <div className="FooterCard">
+                        <Button className="showDatabtn" onClick={()=> setShowTable(!showTable)}>{t("showdata")}</Button>
+                </div>
+            </footer>
 
-            <SearchField onClick={clearButton} value={searchSells} onChange={handleSellsSearch} ></SearchField>
+            {showTable && <div className='dataScreen'>
+                <Button className='dataScreenbtn' onClick={()=> setShowTable(!showTable)}>{t("close")}</Button>
+                <SearchField onClick={clearButton} value={searchSells} onChange={handleSellsSearch} ></SearchField>
 
-            <Table className='Table'>
-                <TableHeader className='TableHeader'>
-                    <TableRow className="Tablehead">
-                        <TableHead onClick={navigatetoSupplies} style={{ cursor: "pointer" }}>{t("supply")}</TableHead>
-                        <TableHead>{t("countity")}</TableHead>
-                        <TableHead>{t("price")}</TableHead>
-                        <TableHead>{t("total")}</TableHead>
-                        <TableHead>{t("date")}</TableHead>
-                        <TableHead>{t("notes")}</TableHead>
-                        <TableHead>{t("actions")}</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className="Tablebody">
-                    {sellData.map((sell, index) => (
-                        <TableRow key={index}>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSellID === sell.id ? (
-                                    <div className='editSupplyContainer'>
+                <Table className='Table'>
+                    <TableHeader className='TableHeader'>
+                        <TableRow className="Tablehead">
+                            <TableHead onClick={navigatetoSupplies} style={{ cursor: "pointer" }}>{t("supply")}</TableHead>
+                            <TableHead>{t("countity")}</TableHead>
+                            <TableHead>{t("price")}</TableHead>
+                            <TableHead>{t("total")}</TableHead>
+                            <TableHead>{t("date")}</TableHead>
+                            <TableHead>{t("notes")}</TableHead>
+                            <TableHead>{t("actions")}</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody className="Tablebody">
+                        {sellData.map((sell, index) => (
+                            <TableRow key={index}>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSellID === sell.id ? (
+                                        <div className='editSupplyContainer'>
+                                            <InputField
+                                                className="Table-Input-Field"
+                                                type="text"
+                                                value={searchEditSupplies}
+                                                onChange={handleSearchEditSupplies}
+                                                onKeyDown={handleEditSuppliesKeyDown}
+                                            />
+                                            {
+                                                searchEditSupplies && <>
+                                                    {editsuppliesData.length > 0 && (
+                                                        searchEditSupplies && <div className="dropdown" ref={dropdownRef}>
+                                                            {editsuppliesData.map((supply, index) => (
+                                                                <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditSuppliesSelect(supply.supply_name)}>
+                                                                    {supply.supply_name}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </>
+                                            }
+                                        </div>
+                                    ) : (
+                                        sell.supply
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSellID === sell.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editsellData.countity}
+                                            onChange={(e) => setEditsellData({ ...editsellData, countity: e.target.value })}
+                                        />
+                                    ) : (
+                                        sell.countity
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSellID === sell.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="number"
+                                            value={editsellData.price}
+                                            onChange={(e) => setEditsellData({ ...editsellData, price: e.target.value })}
+                                        />
+                                    ) : (
+                                        sell.price
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {sell.total}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSellID === sell.id ? (
+                                        <InputField
+                                            className="Table-Input-Field"
+                                            type="date"
+                                            value={editsellData.date}
+                                            onChange={(e) => setEditsellData({ ...editsellData, date: e.target.value })}
+                                        />
+                                    ) : (
+                                        sell.date
+                                    )}
+                                </TableCell>
+                                <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
+                                    {editSellID === sell.id ? (
                                         <InputField
                                             className="Table-Input-Field"
                                             type="text"
-                                            value={searchEditSupplies}
-                                            onChange={handleSearchEditSupplies}
-                                            onKeyDown={handleEditSuppliesKeyDown}
+                                            value={editsellData.notes}
+                                            onChange={(e) => setEditsellData({ ...editsellData, notes: e.target.value })}
                                         />
-                                        {
-                                           searchEditSupplies && <>
-                                                {editsuppliesData.length > 0 && (
-                                                   searchEditSupplies && <div className="dropdown" ref={dropdownRef}>
-                                                        {editsuppliesData.map((supply, index) => (
-                                                            <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleEditSuppliesSelect(supply.supply_name)}>
-                                                                {supply.supply_name}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </>
-                                        }
-                                    </div>
-                                ) : (
-                                    sell.supply
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSellID === sell.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editsellData.countity}
-                                        onChange={(e) => setEditsellData({ ...editsellData, countity: e.target.value })}
-                                    />
-                                ) : (
-                                    sell.countity
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSellID === sell.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="number"
-                                        value={editsellData.price}
-                                        onChange={(e) => setEditsellData({ ...editsellData, price: e.target.value })}
-                                    />
-                                ) : (
-                                    sell.price
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {sell.total}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSellID === sell.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="date"
-                                        value={editsellData.date}
-                                        onChange={(e) => setEditsellData({ ...editsellData, date: e.target.value })}
-                                    />
-                                ) : (
-                                    sell.date
-                                )}
-                            </TableCell>
-                            <TableCell className='TableCells' style={{ fontSize: '20px', padding: '10px' }}>
-                                {editSellID === sell.id ? (
-                                    <InputField
-                                        className="Table-Input-Field"
-                                        type="text"
-                                        value={editsellData.notes}
-                                        onChange={(e) => setEditsellData({ ...editsellData, notes: e.target.value })}
-                                    />
-                                ) : (
-                                    sell.notes
-                                )}
-                            </TableCell>
-                            <TableCell className='ButtonsCell'>
-                                {editSellID === sell.id ? (
-                                    <Button className='TableButton' onClick={() => editSell(sell.id)}>{t("save")}</Button>
-                                ) : (
-                                    <Button className='TableButton' onClick={() => {
-                                        setEditSellID(sell.id);
-                                        setSearchEditSupplies(sell.supply);
-                                        setEditsellData({
-                                            id: sell.id,
-                                            countity: sell.countity,
-                                            price: sell.price,
-                                            date: sell.date,
-                                            notes: sell.notes,
-                                        });
-                                    }}>{t("edit")}</Button>
-                                )}
-                                <Button className='TableButton' onClick={() => deleteSell(sell.id)}>{t("delete")}</Button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                    ) : (
+                                        sell.notes
+                                    )}
+                                </TableCell>
+                                <TableCell className='ButtonsCell'>
+                                    {editSellID === sell.id ? (
+                                        <Button className='TableButton' onClick={() => editSell(sell.id)}>{t("save")}</Button>
+                                    ) : (
+                                        <Button className='TableButton' onClick={() => {
+                                            setEditSellID(sell.id);
+                                            setSearchEditSupplies(sell.supply);
+                                            setEditsellData({
+                                                id: sell.id,
+                                                countity: sell.countity,
+                                                price: sell.price,
+                                                date: sell.date,
+                                                notes: sell.notes,
+                                            });
+                                        }}>{t("edit")}</Button>
+                                    )}
+                                    <Button className='TableButton' onClick={() => deleteSell(sell.id)}>{t("delete")}</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>}
         </BackGround>
     </StyledWrapper >)
 }
@@ -498,6 +507,43 @@ header{
 
         width:43vw;
         height: 55vh;
+}
+
+.FooterCard{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:5em;
+    width:12em;
+
+    background:hsl(0, 0.00%, 9.00%);
+    border-radius:30px;
+    .showDatabtn{
+        height:3em;
+    }
+}
+
+
+.dataScreen{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    width:90vw;
+    height:450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color :hsla(0, 0%, 9%, 0.788);
+    padding: 2em;
+    border: 1px solid #ccc;
+
+    border-radius:20px;
+    .dataScreenbtn{
+        margin-bottom:1em;
+    }
 }
 
 .Firstrow{
