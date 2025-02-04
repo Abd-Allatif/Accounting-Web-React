@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Tools/Loader'
 import { BackGround, Card, InputField, Button } from '../../Tools/Components'
@@ -12,12 +12,6 @@ function Login() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState(false);
-
-  useEffect(() => {
-    const user = localStorage.getItem('user_data');
-    setUserData(JSON.parse(user));
-  }, [])
 
   const navigate = useNavigate();
 
@@ -74,7 +68,7 @@ function Login() {
   return (<>
     <StyledWrapper>
       <BackGround>
-        <Card>
+        <Card className="ItemsContainer">
           <p id="heading">{t("login")}</p>
 
           <div className='InputContainer'>
@@ -114,6 +108,10 @@ const StyledWrapper = styled.div`
     margin: 2em;
     color: rgb(255, 255, 255);
     font-size: 1.2em;
+  }
+
+  .ItemsContainer{
+    height:80vh;
   }
 
   .ButtonContainer {

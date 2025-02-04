@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useState,} from 'react';
 import { useNavigate } from 'react-router-dom'
-import ExcelUploader from '../../Tools/ExcelUploader';
+import ExcelUploader from '../../Tools/Exceluploader';
 import { refreshAccessToken } from '../../Tools/authService'
 import Drawer from '../../Tools/Drawer'
 import { BackGround, Card, Button,TopBar } from '../../Tools/Components'

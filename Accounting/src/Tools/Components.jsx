@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import * as React from "react";
 import classNames from "classnames";
@@ -13,6 +15,7 @@ const BackGround = React.forwardRef(({ className, ...props }, ref) => (
     </BackGroundStyle>
 ));
 BackGround.displayName = "BackGround";
+
 
 
 const Card = React.forwardRef(({ className, ...props }, ref) => (
