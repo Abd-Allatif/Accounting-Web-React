@@ -175,6 +175,7 @@ function Customers() {
                                 <TableCell style={{ fontSize: '20px', padding: '10px' }}>
                                     {editCustomer === customer.customer_name ? (
                                         <InputField
+                                            className="EditType"
                                             type="text"
                                             value={editCustomerValue}
                                             onChange={(e) => seteditCustomerValue(e.target.value)}
@@ -275,6 +276,11 @@ const StyledWrapper = styled.div`
     .dataScreenbtn{
         margin-bottom:1em;
     }
+}
+
+.EditType{
+    width:200px;
+    height:40px;
 }
 
 .Firstrow{
