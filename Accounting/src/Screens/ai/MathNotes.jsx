@@ -22,6 +22,8 @@ function mathNotes() {
   //creating a state to render the result on the textbox
   const [textValue, setTextValue] = useState("");
 
+  const [range,setRange] = useState(5);
+
   //creating a function to clear the canvas by pressing a button
   function resetCanvas() {
     const canvas = canvasref.current;
@@ -109,6 +111,19 @@ function mathNotes() {
     }
   }, []);
 
+  useEffect(() => {
+    const canvas = canvasref.current;
+    canvas.style.background = bgcolor;
+    setTextValue("");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        //setting brush size
+        ctx.lineWidth = range;
+      }
+    }
+  }, [range,bgcolor]);
+
   //Creating a useEffect hook to activate whenever reset is triggered
   useEffect(() => {
     if (reset) {
@@ -150,6 +165,10 @@ function mathNotes() {
 
   function changeBgColor(e) {
     setBgColor(e.target.value);
+  }
+
+  function handleRangeIncreaments(e){
+    setRange(e.target.value);
   }
 
   const draw = (e) => {
@@ -196,6 +215,18 @@ function mathNotes() {
                   className="ColorPicker"
                   onChange={changeBrushColor}
                   value={color}
+                />
+                <label htmlFor="ColorPicker" style={{ color: "white" ,marginLeft:"10px"}}>
+                  Brush {range}
+                </label>
+                <input
+                  type="Range"
+                  className="ColorPicker"
+                  min="5"
+                  max="15"
+                  onChange={handleRangeIncreaments}
+                  value={range}
+                  style={{width:"100px",marginTop:"4px"}}
                 />
               </div>
               <div>
@@ -268,17 +299,18 @@ const StyledWrapper = styled.div`
   }
 
   .settings {
+    display:flex;
     width: 35vw;
     max-width: 100%;
     height: 100px;
 
+    justify-content:center;
     background-color: #171717;
   }
 
   .colorContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 5px;
     margin-left: 4px;
     justify-content: center;
   }
@@ -287,6 +319,7 @@ const StyledWrapper = styled.div`
     height: 20px;
     margin-left: 10px;
     border-radius: 3px;
+
   }
 
   .Resultbox {
