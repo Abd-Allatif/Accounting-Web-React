@@ -73,6 +73,7 @@ function mathNotes() {
         });
       } catch (e) {
         console.log(e);
+        setTextValue(`An Error Happend Please Try Again Later`);
       }
     }
   };
