@@ -7,14 +7,10 @@ export const login = async (identifier, password,navigate1,navigate2) => {
   if (response.data.access) {
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
-    localStorage.setItem('user_data', JSON.stringify(response.data.user));
+    localStorage.setItem('user_data', JSON.stringify({"user_name":response.data.user.user_name}));
 
-    if (response.data.user.issatup) {
-      navigate1();
-    }
-    else {
-      navigate2();
-    }
+   response.data.user.issatup ? navigate1() : navigate2();;
+    
   }
   
   return response.data;

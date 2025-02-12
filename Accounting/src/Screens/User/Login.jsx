@@ -55,6 +55,7 @@ function Login() {
       try {
         await login(identifier, password,goMainScreen,goSetupAccount);
         window.alert('Login Successful');
+
         setLoading(false);
       }
       catch (error) {
