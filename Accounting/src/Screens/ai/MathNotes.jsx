@@ -105,14 +105,14 @@ function mathNotes() {
       }
 
       canvas.addEventListener("mousemove", draw);
-
+      canvas.addEventListener("touchmove", draw);
       return () => {
         canvas.removeEventListener("mousemove", draw);
+        canvas.removeEventListener("touchmove", draw);
       };
     }
   }, []);
 
- 
   useEffect(() => {
     const canvas = canvasref.current;
     canvas.style.background = bgcolor;
@@ -124,7 +124,6 @@ function mathNotes() {
         ctx.lineWidth = range;
       }
     }
-
   }, [range, bgcolor, color]);
 
   //Creating a useEffect hook to activate whenever reset is triggered
@@ -141,8 +140,10 @@ function mathNotes() {
     //calling the canvas reference from the use ref
     const canvas = canvasref.current;
 
-    const x = e.clientX;
-    const y = e.clientY - canvas.offsetTop;
+    const { clientX, clientY } = e.touches ? e.touches[0] : e;
+
+    const x = clientX;
+    const y = clientY - canvas.offsetTop;
 
     if (canvas) {
       //setting up the canvas and ctx
@@ -180,8 +181,10 @@ function mathNotes() {
     }
     const canvas = canvasref.current;
 
-    const x = e.clientX;
-    const y = e.clientY - canvas.offsetTop;
+    const { clientX, clientY } = e.touches ? e.touches[0] : e;
+
+    const x = clientX;
+    const y = clientY - canvas.offsetTop;
 
     if (canvas) {
       const ctx = canvas.getContext("2d");
