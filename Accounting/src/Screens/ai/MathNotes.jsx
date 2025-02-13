@@ -105,14 +105,10 @@ function mathNotes() {
       }
 
       canvas.addEventListener("mousemove", draw);
-      canvas.addEventListener("touchstart", startDrawing);
       canvas.addEventListener("touchmove", draw);
-      canvas.addEventListener("touchend", stopDrawing);
       return () => {
         canvas.removeEventListener("mousemove", draw);
-        canvas.removeEventListener("touchstart", startDrawing);
         canvas.removeEventListener("touchmove", draw);
-        canvas.removeEventListener("touchend", stopDrawing);
       };
     }
   }, []);
@@ -329,6 +325,9 @@ function mathNotes() {
           onMouseOut={stopDrawing}
           onMouseUp={stopDrawing}
           onMouseMove={draw}
+          onTouchMove={draw}
+          onTouchStart={startDrawing}
+          onTouchEnd={stopDrawing}
         />
       </div>
     </StyledWrapper>
