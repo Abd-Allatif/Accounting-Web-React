@@ -22,6 +22,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { Suspense } from 'react';
 import { AuthProvider } from './Tools/AuthContext';
 import PrivateRoute from './Tools/PrivateRoute';
+import { refreshAccessToken } from './Tools/authService'
 
 
 function App() {
