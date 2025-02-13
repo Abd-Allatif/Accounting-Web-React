@@ -437,6 +437,18 @@ const TopBarStyle = styled.div`
     justify-content:center;
 }
 
+@media (max-width: 768px) {
+    .MathSvg{
+        margin-left:-1em;
+        margin-right:-1em;
+    }
+
+    .DrawerContainer{
+        margin-left:-0.5em;
+        margin-right:-0.5em;
+    }
+
+}
 
 
 `;

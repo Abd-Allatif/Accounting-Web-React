@@ -318,18 +318,20 @@ function mathNotes() {
         <div className="Container">
           <input type="text" className="Resultbox" value={textValue} />
         </div>
-        <canvas
-          ref={canvasref}
-          id="canvas"
-          className="absloute top-0 left-0 width-full h-full"
-          onMouseDown={startDrawing}
-          onMouseOut={stopDrawing}
-          onMouseUp={stopDrawing}
-          onMouseMove={draw}
-          onTouchMove={draw}
-          onTouchStart={startDrawing}
-          onTouchEnd={stopDrawing}
-        />
+        <div className="relative w-full h-full overflow-hidden">
+          <canvas
+            ref={canvasref}
+            id="canvas"
+            className="absloute top-0 left-0 width-full h-full"
+            onMouseDown={startDrawing}
+            onMouseOut={stopDrawing}
+            onMouseUp={stopDrawing}
+            onMouseMove={draw}
+            onTouchMove={draw}
+            onTouchStart={startDrawing}
+            onTouchEnd={stopDrawing}
+          />
+        </div>
       </div>
     </StyledWrapper>
   );

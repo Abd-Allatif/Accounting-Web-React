@@ -171,6 +171,11 @@ const StyledWrapper = styled.div`
   }
 
   @media (max-width: 768px) {
+      .ItemsContainer{
+        width:90vw;
+        height:95vh;
+      }
+
       .ButtonContainer {
         margin-top: 2.7em;
         padding-left:0.3em;
@@ -183,13 +188,21 @@ const StyledWrapper = styled.div`
       }   
         
       .SignUp {
-        padding-left: 1em;
-        padding-right: 1em;
+        padding-left: 0.7em;
+        padding-right: 0.7m;
+
+        height:40px;
+        font-size:15px;
+        text-align:center;
       }
 
       .Login{
-        padding-left:0.7em;
-        padding-right:0.7em;
+        padding-left: 0.6em;
+        padding-right: 0.6m;
+
+        height:40px;
+        font-size:15px;
+        text-align:center;
       }
 
       .ForgotPassword {

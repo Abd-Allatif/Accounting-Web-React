@@ -165,6 +165,14 @@ const StyledWrapper = styled.div`
   .Loader {
     align-self: center;
   }
+
+   @media (max-width: 768px) {
+      .NewCard{
+        height:95vh;
+        width:95vw;
+      }
+
+   }
 `;
 
 export default Resetpass;

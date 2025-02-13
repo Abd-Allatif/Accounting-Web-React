@@ -190,6 +190,20 @@ const StyledWrapper = styled.div`
   .ResetCode{
     align-self: center;
   }
+
+   @media (max-width: 768px) {
+      .ItemsContainer{
+        height:95vh;
+        width:95vw;
+      }
+
+      .Register{
+          padding-left:0.5em;
+          padding-right:0.5em;
+      }
+
+
+   }
   `;
 
 export default Register
