@@ -156,11 +156,17 @@ function mathNotes() {
         setIsDrawing(true);
       }
     }
+
+    if (e.touches) e.preventDefault();
+
+    // Add the no-scroll class to the body
+    document.body.classList.add("no-scroll");
   };
 
   //creating a function that stops drawing
   const stopDrawing = () => {
     setIsDrawing(false);
+    document.body.classList.remove("no-scroll");
   };
 
   function changeBrushColor(e) {
@@ -284,11 +290,6 @@ function mathNotes() {
                   max="15"
                   onChange={handleRangeIncreaments}
                   value={range}
-                  style={{
-                    width: "100px",
-                    marginTop: "5px",
-                    marginLeft: "10px",
-                  }}
                 />
               </div>
               <div className="SettingsContainer">
@@ -374,6 +375,12 @@ const StyledWrapper = styled.div`
     color: white;
   }
 
+  .Range{
+    width: "100px",
+    marginTop: "5px",
+    marginLeft: "10px",
+  }
+
   .settings {
     display: flex;
     width: 35vw;
@@ -410,6 +417,31 @@ const StyledWrapper = styled.div`
     text-align: center;
     overflow: scroll;
     color: white;
+  }
+
+  @media (max-width: 768px) {
+    .Background {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .funcButton{
+      font-size:20px;
+    }
+    
+    .SettingsContainer{
+      width:100px;
+    }
+
+    .Range{
+      width:60px;
+    }
+    
+
+    .Resultbox {
+      width: 100%;
+    }
   }
 `;
 
