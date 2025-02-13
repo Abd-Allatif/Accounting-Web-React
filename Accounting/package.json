@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "serve -s build",
+    "start": "npx http-server ./dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "homepage": ".",
   "dependencies": {
     "axios": "^1.7.8",
     "classnames": "^2.5.1",
@@ -45,3 +46,4 @@
   "author": "",
   "license": "ISC"
 }
+

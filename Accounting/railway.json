@@ -1,9 +1,0 @@
-{
-    "build": {
-      "command": "npm run build",
-      "directory": "build"
-    },
-    "deploy": {
-      "startCommand": "npx serve -s build"
-    }
-  }
