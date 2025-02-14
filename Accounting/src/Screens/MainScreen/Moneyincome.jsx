@@ -674,7 +674,8 @@ dropdown-item-focused {
 
 @media (max-width: 768px) {
     .TopBarText{
-        margin-left:1em;
+        margin-left:18px;
+        font-size:15px;
     }
 
     .ItemsContainer{
@@ -685,10 +686,13 @@ dropdown-item-focused {
 
         padding:0.5em;
 
-        width:95vw;
-        height: 50vh;
+        width:300px;
+        height: 250px;
+
+        overflow:auto;
     }
 
+    
 
     .Firstrow{
         margin-top:1em;
@@ -696,12 +700,16 @@ dropdown-item-focused {
         height:6em;
 
         align-self:center;
+
+        margin-left:30px;
+        margin-right:30px;
     }
     
+    .dataScreen{
+        height:300px;
+    }
+
     .Secondrow{
-        margin-top:-3em;
-        padding-left:1em;
-        padding-right:1em;
         align-self:center;
     }
 

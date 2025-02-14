@@ -125,7 +125,7 @@ const BackGroundStyle = styled.div`
         height: 100dvh;
         --s: 37px; /* control the size */
 
-        overflow-y:hidden;  
+        overflow-y:auto;  
 
         --c: #0000, #282828 0.5deg 119.5deg, #0000 120deg;
         --g1: conic-gradient(from 60deg at 56.25% calc(425% / 6), var(--c));

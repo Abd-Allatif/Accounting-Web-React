@@ -506,6 +506,11 @@ const StyledWrapper = styled.div`
   
 
 @media (max-width: 768px) {
+    .TopBarText{
+        margin-left:18px;
+        font-size:15px;
+    }
+
     .ItemsContainer{
         margin-top: 5em;
         margin-left:0.5em;
@@ -514,10 +519,13 @@ const StyledWrapper = styled.div`
 
         padding:0.5em;
 
-        width:95vw;
-        height: 50vh;
+        width:300px;
+        height: 250px;
+
+        overflow:auto;
     }
 
+    
 
     .Firstrow{
         margin-top:1em;
@@ -525,17 +533,21 @@ const StyledWrapper = styled.div`
         height:6em;
 
         align-self:center;
+
+        margin-left:30px;
+        margin-right:30px;
     }
     
+    .dataScreen{
+        height:300px;
+    }
+
     .Secondrow{
-        margin-top:-3em;
-        padding-left:1em;
-        padding-right:1em;
         align-self:center;
     }
 
     .first-field{
-        margin:0.1em;
+        margin:0.2em;
     }
 }  
 `;

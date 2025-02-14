@@ -386,15 +386,14 @@ function MainSellScreen() {
           </div>
 
           <div className="Secondrow">
-            <div className="CountityField">
-              <InputField
-                placeholder={t("countity")}
-                type="number"
-                className="SecondrowField"
-                value={countity}
-                onChange={(e) => setCountity(e.target.value)}
-              />
-            </div>
+            <InputField
+              placeholder={t("countity")}
+              type="number"
+              className="SecondrowField"
+              value={countity}
+              onChange={(e) => setCountity(e.target.value)}
+            />
+
             <InputField
               placeholder={t("price")}
               type="number"
@@ -740,6 +739,10 @@ const StyledWrapper = styled.div`
     position: relative;
   }
 
+  .TopBarText{
+    font-size:17px;
+  }
+
   .dropdown {
     position: absolute;
     top: 100%;
@@ -948,7 +951,6 @@ const StyledWrapper = styled.div`
     .TopBarText {
       margin-left: 1.5em;
       margin-right: 1.5em;
-
     }
 
     .Container {
@@ -963,18 +965,18 @@ const StyledWrapper = styled.div`
 
       padding: 0.5em;
 
-      width: 97vw;
-      height: 55vh;
+      width: 300px;
+      height: 300px;
     }
 
     .Firstrow {
-      display:inline-block;
+      display: inline-block;
       margin-top: 1.2em;
       padding: 0.5em;
       height: 6em;
 
       .FirstrowField {
-        width:250px;
+        width: 250px;
       }
     }
 
@@ -994,7 +996,7 @@ const StyledWrapper = styled.div`
         padding-left: 1em;
 
         margin-left: 0.5em;
-        width:300px;
+        width: 300px;
         .Countity {
           width: 8em;
 
@@ -1011,6 +1013,10 @@ const StyledWrapper = styled.div`
         padding-top: 0.7em;
         margin: 1em;
       }
+    }
+
+    .dataScreen{
+      height:300px;
     }
 
     .ForthRow {

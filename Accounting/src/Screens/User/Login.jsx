@@ -112,7 +112,7 @@ const StyledWrapper = styled.div`
   }
 
   .ItemsContainer{
-    height:80vh;
+    height:500px;
   }
 
   .ButtonContainer {
@@ -172,8 +172,8 @@ const StyledWrapper = styled.div`
 
   @media (max-width: 768px) {
       .ItemsContainer{
-        width:90vw;
-        height:95vh;
+        width:290px;
+        height:440px;
       }
 
       .ButtonContainer {

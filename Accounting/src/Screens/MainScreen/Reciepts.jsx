@@ -940,7 +940,8 @@ dropdown-item-focused {
 
 @media (max-width: 768px) {
     .TopBarText{
-        margin-left:1em;
+        margin-left:10px;
+        font-size:15px;
     }
 
     .Container{
@@ -1007,6 +1008,10 @@ dropdown-item-focused {
             margin-right: 1.5em;       
         }
 
+    }
+
+    .dataScreen{
+        height:300px;
     }
 
     .Thirdrow{

@@ -682,6 +682,15 @@ dropdown-item-focused {
         margin-bottom:1em;
     }
 
+    .TopBarText{
+        margin-left:10px;
+        font-size:15px;
+    }
+
+    .dataScreen{
+        height:300px;
+    }
+
     .labels{
         margin-right:1.5em;
         margin-bottom:0.5em;

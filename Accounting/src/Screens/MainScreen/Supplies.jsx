@@ -808,6 +808,10 @@ dropdown-item-focused {
         }
     }
 
+    .dataScreen{
+        height:300px;
+    }
+        
     .Secondrow{
         flex-direction:column;
         margin-top:-2em;

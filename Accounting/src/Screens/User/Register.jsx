@@ -133,7 +133,7 @@ const StyledWrapper = styled.div`
   }
 
   .ItemsContainer{
-    height:80vh;
+    height:500px;
   }
 
   #heading {
@@ -193,8 +193,8 @@ const StyledWrapper = styled.div`
 
    @media (max-width: 768px) {
       .ItemsContainer{
-        height:95vh;
-        width:95vw;
+        height:400px;
+        width:300px;
       }
 
       .Register{

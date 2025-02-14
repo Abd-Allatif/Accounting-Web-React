@@ -144,7 +144,8 @@ const StyledWrapper = styled.div`
   }
 
   .NewCard {
-    height: 600px;
+    height: 500px;
+    overflow-y:auto;
   }
 
   #heading {
@@ -168,8 +169,8 @@ const StyledWrapper = styled.div`
 
    @media (max-width: 768px) {
       .NewCard{
-        height:95vh;
-        width:95vw;
+        height:400px;
+        width:300px;
       }
 
    }

@@ -483,7 +483,12 @@ const StyledWrapper = styled.div`
 
 @media (max-width: 768px) {
     .TopBarText{
-        margin-left:1em;
+        margin-left:15px;
+        font-size:15px;
+    }
+
+    .dataScreen{
+        height:300px;
     }
 
     .ItemsContainer{
@@ -507,6 +512,7 @@ const StyledWrapper = styled.div`
     
     .Secondrow{
         margin-top:-1em;
+        margin-bottom:30px;
     }
 }  
 `;

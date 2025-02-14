@@ -137,6 +137,7 @@ function mathNotes() {
 
   //creating a mouse event handler to draw elements on the canvas
   const startDrawing = (e) => {
+    e.preventDefault();
     //calling the canvas reference from the use ref
     const canvas = canvasref.current;
 
@@ -156,8 +157,6 @@ function mathNotes() {
         setIsDrawing(true);
       }
     }
-
-    if (e.touches) e.preventDefault();
 
     // Add the no-scroll class to the body
     document.body.classList.add("no-scroll");
@@ -185,6 +184,9 @@ function mathNotes() {
     if (!isDrawing) {
       return;
     }
+    
+    e.preventDefault();
+
     const canvas = canvasref.current;
 
     const { clientX, clientY } = e.touches ? e.touches[0] : e;
@@ -318,7 +320,6 @@ function mathNotes() {
         <div className="Container">
           <input type="text" className="Resultbox" value={textValue} />
         </div>
-        <div className="relative w-full h-full overflow-hidden">
           <canvas
             ref={canvasref}
             id="canvas"
@@ -332,7 +333,6 @@ function mathNotes() {
             onTouchEnd={stopDrawing}
           />
         </div>
-      </div>
     </StyledWrapper>
   );
 }

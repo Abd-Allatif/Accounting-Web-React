@@ -912,11 +912,6 @@ dropdown-item-focused {
   
 
 @media (max-width: 768px) {
-    .TopBarText{
-        margin-left:1em;
-       
-    }
-
     .Container{
         overflow:hidden;
     }
@@ -943,6 +938,16 @@ dropdown-item-focused {
             margin-right:0.5em;
             width:9em;
         }
+    }
+
+    .dataScreen{
+        height:300px;
+    }
+
+    .TopBarText{
+        font-size:17px;
+        margin-left:20px;
+        margin-right:15px;
     }
 
     .Secondrow{

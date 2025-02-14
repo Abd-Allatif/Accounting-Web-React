@@ -775,7 +775,8 @@ dropdown-item-focused {
 
 @media (max-width: 768px) {
     .TopBarText{
-        margin-left:1.6em;
+        margin-left:10px;
+        font-size:15px;
     }
 
     .Container{
@@ -803,6 +804,10 @@ dropdown-item-focused {
            
         
         }
+    }
+
+    .dataScreen{
+        height:300px;
     }
 
     .Secondrow{

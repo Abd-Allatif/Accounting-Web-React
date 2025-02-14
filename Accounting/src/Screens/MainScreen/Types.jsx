@@ -435,6 +435,10 @@ const StyledWrapper = styled.div`
         height:6em;
     }
     
+    .dataScreen{
+        height:300px;
+    }
+
     .Secondrow{
         margin-top:-1em;
     }

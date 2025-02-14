@@ -144,7 +144,7 @@ function Customers() {
                 </div>
 
                 <div className="Fourthrow">
-                    <Button className="Add Customer" onClick={send_data}>{t("addCustomer")}</Button>
+                    <Button className="AddCustomer" onClick={send_data}>{t("addCustomer")}</Button>
                 </div>
 
                 <div style={{ alignSelf: 'center' }}>
@@ -436,10 +436,18 @@ const StyledWrapper = styled.div`
 
         padding:0.5em;
 
-        width:60vw;
-        height: 35vh;
+        width:250px;
+        height: 200px;
     }
 
+    .TopBarText{
+        font-size:15px;
+        margin-left:20px;
+    }
+
+    .dataScreen{
+        height:300px;
+    }
 
     .Firstrow{
         margin-top:1em;
