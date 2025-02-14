@@ -1,28 +1,29 @@
 import './App.css'
-import Login from './Screens/User/Login'
-import Register from './Screens/User/Register'
-import Resetpass from './Screens/User/Resertpass'
-import SetAccount from './Screens/Accountsetup/Setaccount'
-import MainSellScreen from './Screens/MainScreen/Mainscreen'
-import Customers from './Screens/MainScreen/Customers'
-import SellCustomer from './Screens/MainScreen/Sellcustomer'
-import MoneyIncome from './Screens/MainScreen/Moneyincome'
-import Payments from './Screens/MainScreen/Payments'
-import Types from './Screens/MainScreen/Types'
-import Supplies from './Screens/MainScreen/Supplies'
-import Reciepts from './Screens/MainScreen/Reciepts'
-import Employee from './Screens/MainScreen/Employee'
-import mathNotes from './Screens/ai/MathNotes'
-import NotFound from './Screens/Notfound/Notfound'
+import React from 'react'
+const Login = React.lazy(() => import('./Screens/User/Login'))
+const Register = React.lazy(() => import('./Screens/User/Register'))
+const Resetpass = React.lazy(() => import('./Screens/User/Resertpass'))
+const SetAccount = React.lazy(() => import('./Screens/Accountsetup/Setaccount'))
+const MainSellScreen = React.lazy(() => import('./Screens/MainScreen/Mainscreen'))
+const Customers = React.lazy(() => import('./Screens/MainScreen/Customers'))
+const SellCustomer = React.lazy(() => import('./Screens/MainScreen/Sellcustomer'))
+const MoneyIncome = React.lazy(() => import('./Screens/MainScreen/Moneyincome'))
+const Payments = React.lazy(() => import('./Screens/MainScreen/Payments'))
+const Types = React.lazy(() => import('./Screens/MainScreen/Types'))
+const Supplies = React.lazy(() => import('./Screens/MainScreen/Supplies'))
+const Reciepts = React.lazy(() => import('./Screens/MainScreen/Reciepts'))
+const Employee = React.lazy(() => import('./Screens/MainScreen/Employee'))
+const mathNotes = React.lazy(() => import('./Screens/ai/MathNotes'))
+const NotFound = React.lazy(() => import('./Screens/Notfound/Notfound'))
 import Loading from './Screens/LoadingScreen/Loading'
-import DispatchSupplies from './Screens/MainScreen/Dispatchsupplies'
-import Inventory from './Screens/MainScreen/Inventory'
-import Options from './Screens/MainScreen/Options'
+const DispatchSupplies = React.lazy(() => import('./Screens/MainScreen/Dispatchsupplies'))
+const Inventory = React.lazy(() => import('./Screens/MainScreen/Inventory'))
+const Options = React.lazy(() => import('./Screens/MainScreen/Options'))
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { Suspense } from 'react';
 import { AuthProvider } from './Tools/AuthContext';
 import PrivateRoute from './Tools/PrivateRoute';
-import { refreshAccessToken } from './Tools/authService'
+
 
 
 function App() {
