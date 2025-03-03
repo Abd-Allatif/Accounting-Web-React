@@ -35,6 +35,7 @@ function Reciepts() {
     const [date, setDate] = useState('');
     const [notes, setNotes] = useState('');
     const [recieptAdded, setRecieptAdded] = useState('');
+    
     const [recieptsData, setRecieptsData] = useState([{
         type: '',
         supply: '',
