@@ -23,6 +23,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { Suspense } from 'react';
 import { AuthProvider } from './Tools/AuthContext';
 import PrivateRoute from './Tools/PrivateRoute';
+import Documentation from './Tools/Components'
 
 
 
@@ -50,6 +51,7 @@ function App() {
             <Route path="/math-notes" element={<PrivateRoute element={mathNotes} />} />
             <Route path="/main/options" element={<PrivateRoute element={Options} />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/doc" element={<Documentation />} />
           </Routes>
         </Router>
       </Suspense>
