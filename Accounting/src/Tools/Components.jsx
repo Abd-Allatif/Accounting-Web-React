@@ -235,18 +235,26 @@ const TopBar = React.forwardRef(
 );
 TopBar.displayName = "TopBar";
 
-const Documentation = React.forwardRef(() => {
+const Documentation = React.forwardRef(({docOpen,setDocOpen}) => {
   const { t } = useTranslation();
   
-  const [close,setClose] = React.useState(true);
   const closebtn = () => {
-    setClose(false);
+    setDocOpen(false);
   };
   return (
     <ContentContainer>
-      {close ? <div className="Back">
-        <p className="Title">Title</p>
-        <p className="Doc">Hello</p>
+      {docOpen ? <div className="Back">
+        <p className="Title">{t("DocumentationTitle")}</p>
+        <p className="Doc1 text-red-600">{t("Doc10")}</p>
+        <p className="Doc">{t("Doc1")}</p>
+        <p className="Doc">{t("Doc2")}</p>
+        <p className="Doc">{t("Doc3")}</p>
+        <p className="Doc">{t("Doc4")}</p>
+        <p className="Doc">{t("Doc5")}</p>
+        <p className="Doc">{t("Doc6")}</p>
+        <p className="Doc">{t("Doc7")}</p>
+        <p className="Doc1 text-blue-400">{t("Doc8")}</p>
+        <p className="Doc1 text-blue-500">{t("Doc9")}</p>
         <div className="btnContainer">
           <Button onClick={closebtn}>{t("close")}</Button>
         </div>
@@ -599,21 +607,22 @@ const ContentContainer = styled.div`
 
     overflow-y: auto;
 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     padding-left: 2em;
     padding-right: 2em;
     padding-bottom: 0.4em;
-
-    margin-top: 50px;
-
-    justify-self: center;
 
     background-color: #171717;
     border-radius: 25px;
 
     overflow-y: auto;
 
-    width: 45vw;
-    height: 85vh;
+    width: 700px;
+    height: 500px;
 
     transition: 0.4s ease-in-out;
 
@@ -650,13 +659,22 @@ const ContentContainer = styled.div`
 
   .Doc {
     color: white;
-    font-size: 25px;
+    font-size: 18px;
 
-    margin: 15px;
+    margin:8px;
+  }
+
+  .Doc1 {
+    font-size: 18px;
+
+    margin:8px;
   }
 
   .btnContainer {
     display: flex;
     justify-content: center;
+
+    margin-top:10px;
+    margin-bottom:10px;
   }
 `;

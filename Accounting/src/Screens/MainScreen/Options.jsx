@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import ExcelUploader from '../../Tools/Exceluploader';
 import { refreshAccessToken } from '../../Tools/authService'
 import Drawer from '../../Tools/Drawer'
-import { BackGround, Card, Button,TopBar } from '../../Tools/Components'
+import Documentation, { BackGround, Card, Button,TopBar } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function Options() {
     const { t } = useTranslation();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    const [docOpen,setDocOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -80,6 +82,10 @@ function Options() {
         document.body.removeChild(a);
     };
 
+    const OpenDocu = () => {
+        setDocOpen(true);
+    }    
+
     return (<StyledWrapper>
         <BackGround className="Container">
             <TopBar drawerButton_Onclick={toggleDrawer(true)} backButton_Onclick={backToMain} Text={t("options")} />
@@ -94,7 +100,12 @@ function Options() {
                 <label className='FirstRowLabel'>{t("uploadData")}</label>
                     <ExcelUploader username={userData.user_name}/>
                 </span>
+                <span className='FirstRow'>
+                <label className='FirstRowLabel'>{t("Documentation")}</label>
+                <Button onClick={OpenDocu} className="firstRowBtn">{t("openDoc")}</Button>
+                </span>
             </Card>
+            {docOpen ? <Documentation docOpen = {docOpen} setDocOpen={setDocOpen}/>:null}   
         </BackGround>
     </StyledWrapper>)
 }
