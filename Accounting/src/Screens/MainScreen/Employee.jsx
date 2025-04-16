@@ -164,7 +164,7 @@ function Employee() {
                 </div>
 
                 <div className="Fourthrow">
-                    <Button className="AddType" onClick={send_data}>{t("employ")}</Button>
+                    <Button className="employ" onClick={send_data}>{t("employ")}</Button>
                 </div>
 
                 <div style={{ alignSelf: 'center' }}>
@@ -347,6 +347,10 @@ const StyledWrapper = styled.div`
 
     padding:1em;
     height:6em;
+}
+
+.employ{
+    margin-top:11px;
 }
 
 .Thirdrow{

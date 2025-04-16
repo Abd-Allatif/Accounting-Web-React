@@ -144,7 +144,7 @@ const StyledWrapper = styled.div`
   }
 
   .NewCard {
-    height: 500px;
+    height: 560px;
     overflow-y:auto;
   }
 

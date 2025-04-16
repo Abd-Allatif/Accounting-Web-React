@@ -177,10 +177,10 @@ function CustomDrawer({ isOpen, toggleDrawer }) {
               <button onClick={goOptions} className='btn'>{t("options")}</button>
             </div>
             <h2 className='FundValue'>{t("sellsFund")}</h2>
-            <p className='FundValue'>{sellsFund}</p>
+            <p className='FundValueNumber'>{sellsFund}</p>
             <button className='SellsFundBtn' onClick={send_data}>{t("moveToPerma")}</button>
             <h2 className='FundValue'>{t("permaFund")}</h2>
-            <p className='FundValue'>{permanatFund}</p>
+            <p className='FundValueNumber'>{permanatFund}</p>
             <div className="PagesContainer">
               <button onClick={goCustomers} className='btn'>{t("customers")} <br /><span className='ShortCutTip'>(alt + c)</span></button>
               <button onClick={goSellCustomers} className='btn'>{t("sellCustomer")} <br /><span className='ShortCutTip'>(alt + x)</span></button>
@@ -280,6 +280,13 @@ const DrawerContent = styled.div`
   .FundValue{
     font-size:25px;
     margin-top:10px;
+  }
+
+  .FundValueNumber{
+    font-size:25px;
+    margin-top:10px;
+
+    color:dodgerblue;
   }
 
   .PagesContainer{
