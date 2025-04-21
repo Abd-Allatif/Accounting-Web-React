@@ -8,7 +8,6 @@ export const login = async (identifier, password,navigate1,navigate2) => {
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     localStorage.setItem('user_data', JSON.stringify({"user_name":response.data.user.user_name}));
-
    response.data.user.issatup ? navigate1() : navigate2();;
     
   }
@@ -19,9 +18,9 @@ export const login = async (identifier, password,navigate1,navigate2) => {
 export const logout = async () => {
   const refresh = localStorage.getItem('refresh_token');
   await axios.post(`${API_URL}/logout/`, { refresh });
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('user_data');
+  localStorage.setItem('access_token',null);
+  localStorage.setItem('refresh_token',null);
+  localStorage.setItem('user_data',null);
 };
 
 

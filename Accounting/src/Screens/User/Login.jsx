@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../Tools/Loader'
 import { BackGround, Card, InputField, Button } from '../../Tools/Components'
@@ -35,6 +35,12 @@ function Login() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  useEffect(() => {
+    localStorage.setItem('access_token', null);
+    localStorage.setItem('refresh_token', null);
+    localStorage.setItem('user_data', null);
+  },[]);
 
   const submitData = async (event) => {
     event.preventDefault();
