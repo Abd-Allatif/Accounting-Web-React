@@ -175,7 +175,8 @@ i18n
           inventory_warn: "Inventory Can not be generated if Supplies Section is Empty",
 
           sellCustomer_Warn: "Sell Customer Can not be completed if Supplies and Customer Sections are Empty",
-          moneyIncome_warn: "Money Income Con not be added if Sell Customers and Customers are Empty"
+          moneyIncome_warn: "Money Income Con not be added if Sell Customers and Customers are Empty",
+          main_warn:"Supplies Can be sold if Supplies Section is Empty",
         },
       },
       ar: {
@@ -342,6 +343,7 @@ i18n
           inventory_warn: "لا يمكن توليد الجرد اذا كان قسم البضاعة فارغ",
           sellCustomer_Warn: "لا يمكن بيع الزبائن اذا كان كلا من قسم البضاعة و الزبون فارغين",
           moneyIncome_warn: "لا يمكن اضافة مقبوضات اذا كان قسم بيع الزبون و الزبون فارغين",
+          main_warn:"لا يمكن بيع بضاعة اذا كان قسم البضاعة فارغ",
 
         },
       },

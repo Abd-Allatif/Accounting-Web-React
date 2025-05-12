@@ -25,6 +25,7 @@ import {
   Button,
   SearchField,
   TopBar,
+  ToolTip
 } from "../../Tools/Components";
 import { useTranslation } from "react-i18next";
 
@@ -426,6 +427,7 @@ function MainSellScreen() {
 
           <div className="FifthRow">
             <Button onClick={send_data}>{t("sell")}</Button>
+            <ToolTip text={t("main_warn")}/>
           </div>
         </Card>
         <footer>
