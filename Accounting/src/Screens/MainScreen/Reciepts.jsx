@@ -17,7 +17,7 @@ import {
     TableHeader,
     TableRow,
 } from "../../Tools/TableComponent"
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar,ToolTip } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function Reciepts() {
@@ -461,6 +461,7 @@ function Reciepts() {
 
                 <div className="FifthRow">
                     <Button onClick={buy_Supply} >{t("buy")}</Button>
+                    <ToolTip text={t("buySupplies_Warn")}/>
                 </div>
             </Card>
 
@@ -823,7 +824,7 @@ dropdown-item-focused {
     align-items:center;
     justify-content:center;
     
-    margin-top:-3em;
+    margin-top:-2em;
 
     padding:1em;
     height:6em;

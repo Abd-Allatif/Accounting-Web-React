@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { refreshAccessToken } from "./authService";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import Documentation from "./Components";
 
 function CustomDrawer({ isOpen, toggleDrawer }) {
   const { t, i18n } = useTranslation();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar,ToolTip } from '../../Tools/Components'
 import { refreshAccessToken } from '../../Tools/authService'
 import { debounce, getInventories, searchBy_only_Supplies, search_inventory } from '../../Tools/BackendServices'
 import Drawer from '../../Tools/Drawer'
@@ -223,6 +223,7 @@ const Inventory = () => {
 
                     <div className="Fourthrow">
                         <Button className="Generate Inventory" onClick={send_data}>{t("generate")}</Button>
+                        <ToolTip text={t("inventory_warn")}/>
                     </div>
                 </Card>
 

@@ -168,6 +168,14 @@ i18n
           Doc9: "8- When You Upload an Excel File Make Sure to Create the Same Supplies With the Same Name Before Uploading",
           Doc10:
             "Don't Ever Lose Your Reset Code Or You will Lose Your Account",
+
+          supplies_warn: "Supplies Can not be added if Types Section is Empty",
+          dispatch_warn: "Supplies Can not be dispatched if Supplies Section is Empty",
+          buySupplies_Warn: "Supplies Can not be bought if Types and Supplies Sections are Empty ",
+          inventory_warn: "Inventory Can not be generated if Supplies Section is Empty",
+
+          sellCustomer_Warn: "Sell Customer Can not be completed if Supplies and Customer Sections are Empty",
+          moneyIncome_warn: "Money Income Con not be added if Sell Customers and Customers are Empty"
         },
       },
       ar: {
@@ -327,6 +335,14 @@ i18n
           Doc9: "8- عندما ترفع ملف اكسل يجب ان تقوم باضافة نفس البضاعة المباعة في الملف و بنفس الاسم قبل ان تقوم برفع الملف",
           Doc10:
             "اياك ابدا ان تخسر رمز اعادة تغيير كلمة المرور و الا سيتم خسارة حسابك",
+
+          supplies_warn: "لا يمكن اضافة بضاعة اذا كان قسم الاصناف فارغ",
+          dispatch_warn: "لا يمكن اخراج بضاعة اذا كان قسم البضاعة فارغ",
+          buySupplies_Warn: "لا يمكن شراء بضاعة اذا كان كلا من قسم الاصناف و البضاعة فارغين",
+          inventory_warn: "لا يمكن توليد الجرد اذا كان قسم البضاعة فارغ",
+          sellCustomer_Warn: "لا يمكن بيع الزبائن اذا كان كلا من قسم البضاعة و الزبون فارغين",
+          moneyIncome_warn: "لا يمكن اضافة مقبوضات اذا كان قسم بيع الزبون و الزبون فارغين",
+
         },
       },
     },

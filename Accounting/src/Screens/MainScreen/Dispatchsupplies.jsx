@@ -18,7 +18,7 @@ import {
     TableHeader,
     TableRow,
 } from "../../Tools/TableComponent"
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar,ToolTip } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function DispatchSupplies() {
@@ -343,6 +343,7 @@ function DispatchSupplies() {
 
                 <div className="FifthRow">
                     <Button onClick={send_data} >{t("dispatch")}</Button>
+                    <ToolTip text={t("dispatch_warn")}/>
                 </div>
             </Card>
 

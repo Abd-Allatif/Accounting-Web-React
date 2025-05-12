@@ -6,7 +6,7 @@ import Loader from '../../Tools/Loader'
 import { refreshAccessToken } from '../../Tools/authService'
 import { getIncome, debounce, searchIncome, searchCustomer } from '../../Tools/BackendServices'
 import Drawer from '../../Tools/Drawer'
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar, ToolTip } from '../../Tools/Components'
 import {
     Table,
     TableBody,
@@ -289,6 +289,7 @@ function MoneyIncome() {
 
                 <div className="Fourthrow">
                     <Button className="AddType" onClick={send_data}>{t("addIncome")}</Button>
+                    <ToolTip text={t("moneyIncome_warn")}/>
                 </div>
 
                 <div style={{ alignSelf: 'center' }}>
@@ -559,7 +560,7 @@ dropdown-item-focused {
     align-items:center;
     justify-content:center;
     
-    margin-top:-3em;
+    margin-top:-2em;
 
     padding:1em;
     height:6em;

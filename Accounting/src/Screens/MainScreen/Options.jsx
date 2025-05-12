@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import ExcelUploader from '../../Tools/Exceluploader';
 import { refreshAccessToken } from '../../Tools/authService'
 import Drawer from '../../Tools/Drawer'
-import Documentation, { BackGround, Card, Button,TopBar } from '../../Tools/Components'
+import { BackGround, Card, Button,TopBar,Documentation } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function Options() {

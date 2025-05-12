@@ -18,7 +18,7 @@ import {
     TableHeader,
     TableRow,
 } from "../../Tools/TableComponent"
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar,ToolTip } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function Supplies() {
@@ -348,6 +348,7 @@ function Supplies() {
 
                 <div className="Fourthrow">
                     <Button onClick={send_data}>{t("addSupply")}</Button>
+                    <ToolTip text={t("supplies_warn")}/>
                 </div>
             </Card>
 

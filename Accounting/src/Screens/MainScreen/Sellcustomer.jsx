@@ -16,7 +16,7 @@ import {
     TableHeader,
     TableRow,
 } from "../../Tools/TableComponent"
-import { BackGround, Card, InputField, Button, SearchField, TopBar } from '../../Tools/Components'
+import { BackGround, Card, InputField, Button, SearchField, TopBar,ToolTip } from '../../Tools/Components'
 import { useTranslation } from 'react-i18next';
 
 function SellCustomer() {
@@ -436,6 +436,7 @@ function SellCustomer() {
 
                 <div className="FifthRow">
                     <Button onClick={send_data} >{t("sellCustomerbtn")}</Button>
+                    <ToolTip text={t("sellCustomer_Warn")}/>
                 </div>
             </Card>
             <footer>
