@@ -222,7 +222,7 @@ function DispatchSupplies() {
             setreason('');
             location.reload();
         }).catch(error => {
-            alert("An Error Happend Please Wait and Try Again", error);
+            // alert("An Error Happend Please Wait and Try Again", error);
         });
     };
 

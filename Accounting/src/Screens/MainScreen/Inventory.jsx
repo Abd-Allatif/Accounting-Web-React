@@ -247,7 +247,7 @@ const Inventory = () => {
                             {inventories.map(inventory => (
                                 <TableRow key={inventory.id}>
                                     <TableCell className='Name'>
-                                        {inventory.supply} - {inventory.start_date} {"-->>"} {inventory.end_date}
+                                        {inventory.supply.supply_name} - {inventory.start_date} {"-->>"} {inventory.end_date}
                                     </TableCell>
                                     <TableCell className='ButtonsCell'>
                                         <Button className='TableButton' onClick={() => handleShow(inventory)}>{t("show")}</Button>
@@ -285,7 +285,7 @@ const Inventory = () => {
                                 </TableHeader>
                                 <TableBody className="Tablebody">
                                     <TableCell>
-                                        {selectedInventory.supply}
+                                        {selectedInventory.supply.supply_name}
                                     </TableCell>
                                     <TableCell>
                                         {selectedInventory.initial_countity}
