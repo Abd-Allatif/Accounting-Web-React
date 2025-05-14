@@ -101,7 +101,7 @@ function Options() {
                     <ExcelUploader username={userData.user_name}/>
                 </span>
                 <span className='FirstRow'>
-                <label className='FirstRowLabel'>{t("Documentation")}</label>
+                <label className='FirstRowLabel'>{t("Doc")}</label>
                 <Button onClick={OpenDocu} className="firstRowBtn">{t("openDoc")}</Button>
                 </span>
             </Card>

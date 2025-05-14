@@ -133,7 +133,7 @@ function MoneyIncome() {
             setLoading(false);
             location.reload();
         }).catch(error => {
-            alert("An Error Happend Please Wait and Try Again");
+            // alert("An Error Happend Please Wait and Try Again");
             setLoading(false);
         });
     };

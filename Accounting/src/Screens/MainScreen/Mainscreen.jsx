@@ -136,6 +136,8 @@ function MainSellScreen() {
         });
       } else if (event.key === "Enter" && focusedIndex >= 0) {
         handleSuppliesSelect(suppliesData[focusedIndex].supply_name);
+        setCountity(1);
+        setPrice(suppliesData[focusedIndex].sell_price);
       }
     }
   };

@@ -160,6 +160,10 @@ function Reciepts() {
                 });
             } else if (event.key === 'Enter' && focusedIndex >= 0) {
                 handleSuppliesSelect(suppliesData[focusedIndex].supply_name);
+                setCountity(1);
+                setBuyPrice(suppliesData[focusedIndex].buy_price);
+                setSellPrice(suppliesData[focusedIndex].sell_price);
+
             }
         }
     };

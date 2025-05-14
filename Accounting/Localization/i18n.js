@@ -165,9 +165,10 @@ i18n
           Doc6: "5- Avoid Adding Dump Records If You Don't Need Them for Less Discrepancy",
           Doc7: "6- If You Buy a Non Existed Supply It Will be Created But You Have to Edit Some Default Data By your Self",
           Doc8: "7- Downloaded Data Doesn't Include You Account Information and Supply Information",
-          Doc9: "8- When You Upload an Excel File Make Sure to Create the Same Supplies With the Same Name Before Uploading",
+          Doc9: "8- When You Upload an Excel File Make Sure to Create the Same Supplies With the Same Name in the Supplies Section Before Uploading",
           Doc10:
             "Don't Ever Lose Your Reset Code Or You will Lose Your Account",
+          Doc11:'9- Make sure that edited data are correct not all data are automatically applied',
 
           supplies_warn: "Supplies Can not be added if Types Section is Empty",
           dispatch_warn: "Supplies Can not be dispatched if Supplies Section is Empty",
@@ -333,11 +334,12 @@ i18n
           Doc6: "5- تجنب اضافة بيانات وهمية او خاطئة للتقليل من النقص في التقراير",
           Doc7: "6- اذا اشتريت بضاعة ليست موجودة سابقا سيتم انشاء البضاعة تلقائيا ولكن يجب تعديل بعض البيانات التي تتولد تلقائيا",
           Doc8: "7- البيانات المحملة لا تحمل معلومات حول حسابك و بيانات البضاعة",
-          Doc9: "8- عندما ترفع ملف اكسل يجب ان تقوم باضافة نفس البضاعة المباعة في الملف و بنفس الاسم قبل ان تقوم برفع الملف",
+          Doc9: "8- عندما ترفع ملف اكسل يجب ان تقوم باضافة نفس البضاعة المباعة في قسم البضاعة و بنفس الاسم قبل ان تقوم برفع الملف",
           Doc10:
             "اياك ابدا ان تخسر رمز اعادة تغيير كلمة المرور و الا سيتم خسارة حسابك",
-
-          supplies_warn: "لا يمكن اضافة بضاعة اذا كان قسم الاصناف فارغ",
+            Doc11: '9- تاكد من البيانات عند التعديل لان ليس جميعها يتم تعيينه بشكل تلقائي',
+          
+            supplies_warn: "لا يمكن اضافة بضاعة اذا كان قسم الاصناف فارغ",
           dispatch_warn: "لا يمكن اخراج بضاعة اذا كان قسم البضاعة فارغ",
           buySupplies_Warn: "لا يمكن شراء بضاعة اذا كان كلا من قسم الاصناف و البضاعة فارغين",
           inventory_warn: "لا يمكن توليد الجرد اذا كان قسم البضاعة فارغ",

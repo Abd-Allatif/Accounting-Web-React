@@ -110,6 +110,8 @@ function DispatchSupplies() {
                 });
             } else if (event.key === 'Enter' && focusedIndex >= 0) {
                 handleSuppliesSelect(suppliesData[focusedIndex].supply_name);
+                setCountity(1);
+                setbuy_price(suppliesData[focusedIndex].buy_price);
             }
         }
     };
@@ -313,11 +315,12 @@ function DispatchSupplies() {
                             searchSupplies && <>
                                 {suppliesData.length > 0 && (
                                     searchSupplies && <div className="dropdown" ref={dropdownRef}>
-                                        {suppliesData.map((supply, index) => (
-                                            <div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleSuppliesSelect(supply.supply_name)}>
+                                        {suppliesData.map((supply, index) => {
+                                            
+                                            return(<div key={index} className={`dropdown-item${index === focusedIndex ? '-focused' : ''}`} onClick={() => handleSuppliesSelect(supply.supply_name)}>
                                                 {supply.supply_name}
-                                            </div>
-                                        ))}
+                                            </div>)
+                                        })}
                                     </div>
                                 )}
                             </>

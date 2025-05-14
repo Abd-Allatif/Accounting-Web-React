@@ -63,6 +63,8 @@ function SellCustomer() {
     const [searchCustomersAndSupplies, setsearchCustomersAndSupplies] = useState('');
     const [showTable, setShowTable] = useState(false);
 
+    const [unit,setUnit] = useState('');
+
     const userData = JSON.parse(localStorage.getItem('user_data'));
 
     const navigate = useNavigate();
@@ -164,9 +166,13 @@ function SellCustomer() {
                 });
             } else if (event.key === 'Enter' && focusedIndex >= 0) {
                 handleSuppliesSelect(suppliesData[focusedIndex].supply_name);
+                setCountity(1);
+                setPrice(suppliesData[focusedIndex].sell_price);
+                setUnit(suppliesData[focusedIndex].unit);
             }
         }
     };
+
 
     const scrollToItem = (index) => {
         const dropdown = dropdownRef.current;
@@ -415,7 +421,7 @@ function SellCustomer() {
 
                 <div className="Secondrow">
                     <div className="CountityField">
-                        <InputField placeholder={t("countity")} type="number" className="Countity" value={countity} onChange={(e) => setCountity(e.target.value)} />
+                        <InputField placeholder={t("countity")} type="number" className="Countity" value={countity} onChange={(e) => {setCountity(e.target.value);}} />
                     </div>
                     <InputField placeholder={t("price")} type="number" className="SecondrowField" value={price} onChange={(e) => setPrice(e.target.value)} />
                     <InputField placeholder={t("debt")} type="number" className="SecondrowField" value={debt} onChange={(e) => setdebt(e.target.value)} />
