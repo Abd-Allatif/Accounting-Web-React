@@ -168,16 +168,23 @@ i18n
           Doc9: "8- When You Upload an Excel File Make Sure to Create the Same Supplies With the Same Name in the Supplies Section Before Uploading",
           Doc10:
             "Don't Ever Lose Your Reset Code Or You will Lose Your Account",
-          Doc11:'9- Make sure that edited data are correct not all data are automatically applied',
+          Doc11:
+            ". Make sure that edited data are correct not all data are automatically applied",
+          Doc12:"These Steps Help Improve the Integrity and Consistancy of Your Data Where If you Try To add something without applying these conditions the Program will throw an Error",
 
           supplies_warn: "Supplies Can not be added if Types Section is Empty",
-          dispatch_warn: "Supplies Can not be dispatched if Supplies Section is Empty",
-          buySupplies_Warn: "Supplies Can not be bought if Types and Supplies Sections are Empty ",
-          inventory_warn: "Inventory Can not be generated if Supplies Section is Empty",
+          dispatch_warn:
+            "Supplies Can not be dispatched if Supplies Section is Empty",
+          buySupplies_Warn:
+            "Supplies Can not be bought if Types and Supplies Sections are Empty ",
+          inventory_warn:
+            "Inventory Can not be generated if Supplies Section is Empty",
 
-          sellCustomer_Warn: "Sell Customer Can not be completed if Supplies and Customer Sections are Empty",
-          moneyIncome_warn: "Money Income Con not be added if Sell Customers and Customers are Empty",
-          main_warn:"Supplies Can be sold if Supplies Section is Empty",
+          sellCustomer_Warn:
+            "Sell Customer Can not be completed if Supplies and Customer Sections are Empty",
+          moneyIncome_warn:
+            "Money Income Con not be added if Sell Customers and Customers are Empty",
+          main_warn: "Supplies Can be sold if Supplies Section is Empty",
         },
       },
       ar: {
@@ -322,7 +329,7 @@ i18n
           showdata: "اظهار البيانات",
 
           Doc: "وثائق تعليمية",
-          openDoc:"فتح الوثائق",
+          openDoc: "فتح الوثائق",
 
           DocumentationTitle: "هام يرجى القراءة",
 
@@ -337,16 +344,20 @@ i18n
           Doc9: "8- عندما ترفع ملف اكسل يجب ان تقوم باضافة نفس البضاعة المباعة في قسم البضاعة و بنفس الاسم قبل ان تقوم برفع الملف",
           Doc10:
             "اياك ابدا ان تخسر رمز اعادة تغيير كلمة المرور و الا سيتم خسارة حسابك",
-            Doc11: '9- تاكد من البيانات عند التعديل لان ليس جميعها يتم تعيينه بشكل تلقائي',
-          
-            supplies_warn: "لا يمكن اضافة بضاعة اذا كان قسم الاصناف فارغ",
-          dispatch_warn: "لا يمكن اخراج بضاعة اذا كان قسم البضاعة فارغ",
-          buySupplies_Warn: "لا يمكن شراء بضاعة اذا كان كلا من قسم الاصناف و البضاعة فارغين",
-          inventory_warn: "لا يمكن توليد الجرد اذا كان قسم البضاعة فارغ",
-          sellCustomer_Warn: "لا يمكن بيع الزبائن اذا كان كلا من قسم البضاعة و الزبون فارغين",
-          moneyIncome_warn: "لا يمكن اضافة مقبوضات اذا كان قسم بيع الزبون و الزبون فارغين",
-          main_warn:"لا يمكن بيع بضاعة اذا كان قسم البضاعة فارغ",
+          Doc11:
+            ". تاكد من البيانات عند التعديل لان ليس جميعها يتم تعيينه بشكل تلقائي",
+          Doc12: ". هذه الخطوات تساعد في الحفاظ على اتساق و تناسق لبياناتك بحيث اذا اضفت شيئا بدون تطبيق الشروط السابقة سيتم اظهار رسالة خطا",
 
+          supplies_warn: "لا يمكن اضافة بضاعة اذا كان قسم الاصناف فارغ",
+          dispatch_warn: "لا يمكن اخراج بضاعة اذا كان قسم البضاعة فارغ",
+          buySupplies_Warn:
+            "لا يمكن شراء بضاعة اذا كان كلا من قسم الاصناف و البضاعة فارغين",
+          inventory_warn: "لا يمكن توليد الجرد اذا كان قسم البضاعة فارغ",
+          sellCustomer_Warn:
+            "لا يمكن بيع الزبائن اذا كان كلا من قسم البضاعة و الزبون فارغين",
+          moneyIncome_warn:
+            "لا يمكن اضافة مقبوضات اذا كان قسم بيع الزبون و الزبون فارغين",
+          main_warn: "لا يمكن بيع بضاعة اذا كان قسم البضاعة فارغ",
         },
       },
     },

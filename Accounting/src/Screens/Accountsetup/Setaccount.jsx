@@ -1,27 +1,32 @@
-import { useState } from "react";
-import styled from 'styled-components';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState,useRef } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../Tools/Loader";
-import { login, refreshAccessToken } from '../../Tools/authService'
-import App from '../../App'
+import { refreshAccessToken } from "../../Tools/authService";
 import { useTranslation } from "react-i18next";
-
+import { Documentation } from "../../Tools/Components";
 
 function SetAccount() {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation();
 
-  const [budget, setBudget] = useState('');
-  const [types, setTypes] = useState('');
+  const [budget, setBudget] = useState("");
+  const [types, setTypes] = useState("");
   const [displayTypes, setDisplayTypes] = useState([]);
-  const [customerName, setCustomerName] = useState('');
+  const [customerName, setCustomerName] = useState("");
   const [displayCustomer, setDisplayCustomer] = useState([]);
-  const [employee, setEmployees] = useState('');
+  const [employee, setEmployees] = useState("");
   const [displayEmployee, setDisplayEmployees] = useState([]);
 
-  const userData = JSON.parse(localStorage.getItem('user_data'));
+  const typesRef = useRef();
+  const customerRef = useRef();
+  const employeeRef = useRef();
+
+  const  [docOpen,setDocOpen] = useState(true);
+
+  const userData = JSON.parse(localStorage.getItem("user_data"));
 
   const navigate = useNavigate();
 
@@ -29,9 +34,11 @@ function SetAccount() {
     navigate("/main");
   };
 
-  const addToList = (list, setList, value) => {
+  const addToList = (list, setList, value, setValue,ref) => {
     if (value) {
       setList([...list, value]);
+      setValue("");
+      ref.current.focus();
     }
   };
 
@@ -40,7 +47,6 @@ function SetAccount() {
     setList(newList);
   };
 
-
   const refreshAndSubmit = async () => {
     try {
       // Refresh the access token
@@ -48,27 +54,28 @@ function SetAccount() {
 
       if (budget == null || budget == "") {
         alert(t("setupError"));
-      }
-      else {
+      } else {
         // Send all data to the backend
-        await axios.post(`${import.meta.env.VITE_API_URL}/${userData.user_name}/setup/`, {
-          issatup: true,
-          budget,
-          types: displayTypes,
-          customers: displayCustomer,
-          employees: displayEmployee,
-        }, {
-          headers: {
-            'Authorization': `Bearer ${newAccessToken}`,
-            'Content-Type': 'application/json'
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/${userData.user_name}/setup/`,
+          {
+            issatup: true,
+            budget,
+            types: displayTypes,
+            customers: displayCustomer,
+            employees: displayEmployee,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${newAccessToken}`,
+              "Content-Type": "application/json",
+            },
           }
-        });
+        );
       }
-      alert('Setup successful!');
+      alert("Setup successful!");
     } catch (error) {
-      if(displayCustomer.length != 0 && displayTypes.length != 0 && displayEmployee.length != 0){
-        alert('Setup failed, please try again.');
-      }
+      
     } finally {
       setLoading(false);
     }
@@ -79,7 +86,7 @@ function SetAccount() {
     setLoading(true);
 
     try {
-      console.log('Access Token:', localStorage.getItem('access_token'));
+      console.log("Access Token:", localStorage.getItem("access_token"));
       // Send all data to the backend
       await refreshAndSubmit();
       goMainScreen();
@@ -88,76 +95,175 @@ function SetAccount() {
     }
   };
 
-
-
-
-  return (<StyledWrapper>
-    <div className='Container'>
-      <div className="form">
-        <p id="heading">{t("setupAccount")}</p>
-        {/**/}
-        <div className='InputContainer'>
-          <div className="field">
-            <input autoComplete="off" placeholder={t("enterBudget")} className="input-field" type="text" value={budget} onChange={(e) => setBudget(e.target.value)} />
+  return (
+    <StyledWrapper>
+      <div className="Container">
+        <div className="form">
+          <p id="heading">{t("setupAccount")}</p>
+          {/**/}
+          <div className="InputContainer">
+            <div className="field">
+              <input
+                autoComplete="off"
+                placeholder={t("enterBudget")}
+                className="input-field"
+                type="text"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <input
+                placeholder={t("insertTypes")}
+                className="input-field"
+                type="text"
+                value={types}
+                ref={typesRef}
+                onChange={(e) => setTypes(e.target.value)}
+              />
+              <button
+                className="fieldbtn"
+                onClick={() =>
+                  addToList(displayTypes, setDisplayTypes, types, setTypes,typesRef)
+                }
+              >
+                <span style={{ color: "#A0D2AB" }}>
+                  <b>+</b>
+                </span>
+              </button>
+            </div>
+            {/* types Inserted Display*/}
+            <div className="ulfield">
+              <ul>
+                {displayTypes.map((item, index) => (
+                  <li key={index}>
+                    {item}
+                    <button
+                      className="listbtn"
+                      onClick={() =>
+                        removeFromList(displayTypes, setDisplayTypes, index)
+                      }
+                    >
+                      x
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="field">
+              <input
+                placeholder={t("insertExistingCustomer")}
+                className="input-field"
+                type="text"
+                value={customerName}
+                ref={customerRef}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
+              <button
+                className="fieldbtn"
+                onClick={() =>
+                  addToList(
+                    displayCustomer,
+                    setDisplayCustomer,
+                    customerName,
+                    setCustomerName,
+                    customerRef
+                  )
+                }
+              >
+                <span style={{ color: "#A0D2AB" }}>
+                  <b>+</b>
+                </span>
+              </button>
+            </div>
+            {/* Customers Inserted Display*/}
+            <div className="ulfield">
+              <ul>
+                {displayCustomer.map((item, index) => (
+                  <li key={index}>
+                    {item}
+                    <button
+                      className="listbtn"
+                      onClick={() =>
+                        removeFromList(
+                          displayCustomer,
+                          setDisplayCustomer,
+                          index
+                        )
+                      }
+                    >
+                      x
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="field">
+              <input
+                placeholder={t("insertExistingEmployees")}
+                className="input-field"
+                type="text"
+                value={employee}
+                ref={employeeRef}
+                onChange={(e) => setEmployees(e.target.value)}
+              />
+              <button
+                className="fieldbtn"
+                onClick={() =>
+                  addToList(
+                    displayEmployee,
+                    setDisplayEmployees,
+                    employee,
+                    setEmployees,
+                    employeeRef
+                  )
+                }
+              >
+                <span style={{ color: "#A0D2AB" }}>
+                  <b>+</b>
+                </span>
+              </button>
+            </div>
+            {/* Employees Inserted Display*/}
+            <div className="ulfield">
+              <ul>
+                {displayEmployee.map((item, index) => (
+                  <li key={index}>
+                    {item}
+                    <button
+                      className="listbtn"
+                      onClick={() =>
+                        removeFromList(
+                          displayEmployee,
+                          setDisplayEmployees,
+                          index
+                        )
+                      }
+                    >
+                      x
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="field">
-            <input placeholder={t("insertTypes")} className="input-field" type="text" value={types} onChange={(e) => setTypes(e.target.value)} />
-            <button className="fieldbtn" onClick={() => addToList(displayTypes, setDisplayTypes, types)}><span style={{ color: "#A0D2AB" }}><b>+</b></span></button>
+          <div className="btn">
+            <button className="button1" onClick={submitSetupData}>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("submit")}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
           </div>
-          {/* types Inserted Display*/}
-          <div className="ulfield">
-            <ul>
-              {displayTypes.map((item, index) => (
-                <li key={index}>
-                  {item}
-                  <button className="listbtn" onClick={() => removeFromList(displayTypes, setDisplayTypes, index)}>x</button>
-                </li>
-              ))}
-            </ul>
+          <div className="btn1">
+            {/*Here goes Any button under the above buttons*/}
           </div>
-          <div className="field">
-            <input placeholder={t("insertExistingCustomer")} className="input-field" type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
-            <button className="fieldbtn" onClick={() => addToList(displayCustomer, setDisplayCustomer, customerName)}><span style={{ color: "#A0D2AB" }}><b>+</b></span></button>
-          </div>
-          {/* Customers Inserted Display*/}
-          <div className="ulfield">
-            <ul>
-              {displayCustomer.map((item, index) => (
-                <li key={index}>
-                  {item}
-                  <button className="listbtn" onClick={() => removeFromList(displayCustomer, setDisplayCustomer, index)}>x</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="field">
-            <input placeholder={t("insertExistingEmployees")} className="input-field" type="text" value={employee} onChange={(e) => setEmployees(e.target.value)} />
-            <button className="fieldbtn" onClick={() => addToList(displayEmployee, setDisplayEmployees, employee)}><span style={{ color: "#A0D2AB" }}><b>+</b></span></button>
-          </div>
-          {/* Employees Inserted Display*/}
-          <div className="ulfield">
-            <ul>
-              {displayEmployee.map((item, index) => (
-                <li key={index}>
-                  {item}
-                  <button className="listbtn" onClick={() => removeFromList(displayEmployee, setDisplayEmployees, index)}>x</button>
-                </li>
-              ))}
-            </ul>
+          <div className="Loader">
+            {loading && <Loader width="3" height="20" animateHeight="36" />}
           </div>
         </div>
-        <div className="btn">
-          <button className="button1" onClick={submitSetupData}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("submit")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-        </div>
-        <div className="btn1">
-          {/*Here goes Any button under the above buttons*/}
-        </div>
-        <div className='Loader'>
-          {loading && <Loader width='3' height='20' animateHeight='36' />}
-        </div>
+        {docOpen ? <Documentation docOpen = {docOpen} setDocOpen={setDocOpen}/>:null}   
       </div>
-    </div>
-  </StyledWrapper>);
+    </StyledWrapper>
+  );
 }
 
 const StyledWrapper = styled.div`

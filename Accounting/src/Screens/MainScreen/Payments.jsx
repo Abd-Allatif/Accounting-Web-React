@@ -523,7 +523,7 @@ const StyledWrapper = styled.div`
 
         padding:0.5em;
 
-        width:300px;
+        width:95vw;
         height: 250px;
 
         overflow:auto;
@@ -552,6 +552,10 @@ const StyledWrapper = styled.div`
 
     .first-field{
         margin:0.2em;
+    }
+
+    .note-field{
+        width:40vw;
     }
 }  
 `;

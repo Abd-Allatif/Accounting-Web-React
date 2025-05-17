@@ -681,13 +681,13 @@ dropdown-item-focused {
 
     .ItemsContainer{
         margin-top: 5em;
-        margin-left:0.5em;
-        margin-right:0.5em;
+        margin-left:20px;
+        margin-right:20px;
         margin-bottom:1.5em;
 
         padding:0.5em;
 
-        width:300px;
+        width:95vw;
         height: 250px;
 
         overflow:auto;
@@ -697,7 +697,7 @@ dropdown-item-focused {
 
     .Firstrow{
         margin-top:1em;
-        width:350px;
+        width:100vw;
         height:6em;
 
         align-self:center;
@@ -712,10 +712,15 @@ dropdown-item-focused {
 
     .Secondrow{
         align-self:center;
+        width:80vw;
     }
 
     .first-field{
         margin:0.2em;
+    }
+
+    .note-field{
+        width:40vw;
     }
 }  
 `;

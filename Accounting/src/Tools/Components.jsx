@@ -253,9 +253,10 @@ const Documentation = React.forwardRef(({docOpen,setDocOpen}) => {
         <p className="Doc">{t("Doc5")}</p>
         <p className="Doc">{t("Doc6")}</p>
         <p className="Doc">{t("Doc7")}</p>
+        <p className="Doc1 text-red-500">{t("Doc11")}</p>
+        <p className="Doc1 text-white">{t("Doc12")}</p>
         <p className="Doc1 text-blue-400">{t("Doc8")}</p>
         <p className="Doc1 text-blue-500">{t("Doc9")}</p>
-        <p className="Doc1 text-red-500">{t("Doc11")}</p>
         <div className="btnContainer">
           <Button onClick={closebtn}>{t("close")}</Button>
         </div>
