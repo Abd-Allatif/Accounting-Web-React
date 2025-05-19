@@ -42,12 +42,15 @@ const Inventory = () => {
       initial_fund: "",
       final_fund: "",
       sales_countity: "",
+      sales_value:"",
+      purchase_value:"",
       purchase_countity: "",
       debt_countity: "",
       unpaid_customers: "",
       discrepancy: "",
       dispatched_supply: "",
       dispatched_value: "",
+      profits: "",
       start_date: "",
       end_date: "",
       inventory_date: "",
@@ -398,12 +401,15 @@ const Inventory = () => {
                     <TableHead>{t("initialFund")}</TableHead>
                     <TableHead>{t("finalFund")}</TableHead>
                     <TableHead>{t("salesCountity")}</TableHead>
+                    <TableHead>{t("sells_value")}</TableHead>
                     <TableHead>{t("purchaseCountity")}</TableHead>
+                    <TableHead>{t("purchase_value")}</TableHead>
                     <TableHead>{t("debtCountity")}</TableHead>
                     <TableHead>{t("unPaidCustomers")}</TableHead>
                     <TableHead>{t("discrepancy")}</TableHead>
                     <TableHead>{t("dispatchedSupply")}</TableHead>
                     <TableHead>{t("dispatchedValue")}</TableHead>
+                    <TableHead>{t("profits")}</TableHead>
                     <TableHead>{t("startDate")}</TableHead>
                     <TableHead>{t("endDate")}</TableHead>
                     <TableHead>{t("inventoryDate")}</TableHead>
@@ -416,12 +422,15 @@ const Inventory = () => {
                   <TableCell>{selectedInventory.initial_fund}</TableCell>
                   <TableCell>{selectedInventory.final_fund}</TableCell>
                   <TableCell>{selectedInventory.sales_countity}</TableCell>
+                  <TableCell>{selectedInventory.sales_value}</TableCell>
                   <TableCell>{selectedInventory.purchase_countity}</TableCell>
+                  <TableCell>{selectedInventory.purchase_value}</TableCell>
                   <TableCell>{selectedInventory.debt_countity}</TableCell>
                   <TableCell>{selectedInventory.unpaid_customers}</TableCell>
                   <TableCell>{selectedInventory.discrepancy}</TableCell>
                   <TableCell>{selectedInventory.dispatched_supply}</TableCell>
                   <TableCell>{selectedInventory.dispatched_value}</TableCell>
+                  <TableCell>{selectedInventory.profits}</TableCell>
                   <TableCell>{selectedInventory.start_date}</TableCell>
                   <TableCell>{selectedInventory.end_date}</TableCell>
                   <TableCell>{selectedInventory.inventory_date}</TableCell>

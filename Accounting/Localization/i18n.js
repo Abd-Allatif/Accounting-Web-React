@@ -104,7 +104,7 @@ i18n
           initialFund: "Initial Fund",
           finalFund: "Final Fund",
           salesCountity: "Sales Countity",
-          purchaseCountity: "Purchase Countity",
+          purchaseCountity: "Purchases Countity",
           debtCountity: "Debt Countity",
           unPaidCustomers: "Unpaid Customers",
           discrepancy: "Discrepancy",
@@ -112,6 +112,11 @@ i18n
           dispatchedValue: "Dispatched Value",
           inventoryDate: "Inventory Date",
 
+          profits: "Profits",
+
+          sells_value:"Sales Value",
+          purchase_value: "Purchases Value",
+          
           close: "Close",
 
           setupAccount: "SetUp Your Account",
@@ -129,6 +134,7 @@ i18n
 
           reset: "Reset",
           calculate: "Calculate",
+
 
           passwordmatcherror: "Password Does Not Match",
 
@@ -289,6 +295,11 @@ i18n
           dispatchedSupply: "البضاعة المخرجة",
           dispatchedValue: "قيمة الاخراج",
           inventoryDate: "تاريخ الجرد",
+
+          profits: "الارباح",
+
+          sells_value:"قيمة المبيعات",
+          purchase_value: "قيمة المشتريات",
 
           close: "اغلاق",
 
