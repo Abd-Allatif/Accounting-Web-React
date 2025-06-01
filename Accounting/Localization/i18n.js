@@ -170,7 +170,7 @@ i18n
           Doc5: "4- You Can't Generate Inventory Records If You Don't Have a (Supply)",
           Doc6: "5- Avoid Adding Dump Records If You Don't Need Them for Less Discrepancy",
           Doc7: "6- If You Buy a Non Existed Supply It Will be Created But You Have to Edit Some Default Data By your Self",
-          Doc8: "7- Downloaded Data Doesn't Include You Account Information and Supply Information",
+          Doc8: "7- Downloaded Data Doesn't Include Your Account Information and Supply Information",
           Doc9: "8- When You Upload an Excel File Make Sure to Create the Same Supplies With the Same Name in the Supplies Section Before Uploading",
           Doc10:
             "Don't Ever Lose Your Reset Code Or You will Lose Your Account",
@@ -190,7 +190,7 @@ i18n
             "Sell Customer Can not be completed if Supplies and Customer Sections are Empty",
           moneyIncome_warn:
             "Money Income Con not be added if Sell Customers and Customers are Empty",
-          main_warn: "Supplies Can be sold if Supplies Section is Empty",
+          main_warn: "Supplies Can not be sold if Supplies Section is Empty",
         },
       },
       ar: {

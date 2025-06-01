@@ -95,8 +95,8 @@ function Employee() {
             setLoading(false);
             location.reload();
         }).catch(error => {
-            alert("An Error Happend Please Wait and Try Again");
-            setLoading(false);
+            // alert("An Error Happend Please Wait and Try Again");
+            // setLoading(false);
         });
     };
 
@@ -119,8 +119,8 @@ function Employee() {
             setEmployeeData([]);
             fetchEmployees();
         } catch (error) {
-            console.error('Error saving supply', error);
-            alert("An error happened while saving the Employee. Please try again.");
+            // console.error('Error saving supply', error);
+            // alert("An error happened while saving the Employee. Please try again.");
         }
     };
 
@@ -138,8 +138,8 @@ function Employee() {
             setEmployeeData(employeeData.filter(employee => employee.employee_name !== editEmployeeID));
             fetchEmployees();
         } catch (error) {
-            console.error('Error deleting supply', error);
-            alert("An error happened while deleting the supply. Please try again.");
+            // console.error('Error deleting supply', error);
+            // alert("An error happened while deleting the supply. Please try again.");
         }
     };
 
