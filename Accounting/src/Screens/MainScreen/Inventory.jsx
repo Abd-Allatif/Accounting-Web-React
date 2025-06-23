@@ -186,6 +186,19 @@ const Inventory = () => {
   const send_data = async (event) => {
     event.preventDefault();
 
+    if(supply.length == 0 || supply == "" || supply == null){
+      alert(t("null_err_supplies"));
+      return;
+    }
+    if(startDate.length == 0 || startDate == "" || startDate == null){
+      alert(t("null_err_startdate"));
+      return;
+    }
+    if(endDate.length == 0 || endDate == "" || endDate == null){
+      alert(t("null_err_enddate"));
+      return;
+    }
+
     // Refresh the access token
     const newAccessToken = await refreshAccessToken();
 

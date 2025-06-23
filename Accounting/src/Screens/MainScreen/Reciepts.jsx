@@ -285,6 +285,31 @@ function Reciepts() {
     const buy_Supply = async (event) => {
         event.preventDefault();
 
+        if(searchTypes.length == 0 || searchTypes == "" || searchTypes == null){
+            alert(t("null_err_types"));
+            return;
+        } 
+        if(searchSupplies.length == 0 || searchSupplies == "" || searchSupplies == null){
+            alert(t("null_err_supplies"));
+            return;
+          }
+          if(countity.length == 0 || countity == "" || countity == null){
+            alert(t("null_err_countity"));
+            return;
+          }
+          if(buy_price.length == 0 || buy_price == "" || buy_price == null){
+            alert(t("null_err_buyprice"));
+            return;
+          }
+          if(sell_price.length == 0 || sell_price == "" || sell_price == null){
+            alert(t("null_err_sellprice"));
+            return;
+          } 
+          if(date.length == 0 || date == "" || date == null){
+            alert(t("null_err_date"));
+            return;
+          }
+
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -341,6 +366,31 @@ function Reciepts() {
     const editReciept = async (recieptId) => {
         try {
             const newAccessToken = await refreshAccessToken();
+            
+            if(editSearchType.length == 0 || editSearchType == "" || editSearchType == null){
+                alert(t("null_err_types"));
+                return;
+            } 
+            if(searchEditSupplies.length == 0 || searchEditSupplies == "" || searchEditSupplies == null){
+                alert(t("null_err_supplies"));
+                return;
+              }
+              if(editRecieptsData.countity.length == 0 || editRecieptsData.countity == "" || editRecieptsData.countity == null){
+                alert(t("null_err_countity"));
+                return;
+              }
+              if(editRecieptsData.buy_price.length == 0 || editRecieptsData.buy_price == "" || editRecieptsData.buy_price == null){
+                alert(t("null_err_buyprice"));
+                return;
+              }
+              if(editRecieptsData.sell_price.length == 0 || editRecieptsData.sell_price == "" || editRecieptsData.sell_price == null){
+                alert(t("null_err_sellprice"));
+                return;
+              } 
+              if(editRecieptsData.date.length == 0 || editRecieptsData.date == "" || editRecieptsData.date == null){
+                alert(t("null_err_date"));
+                return;
+              }
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-reciepts/`, {
                 ...editRecieptsData,

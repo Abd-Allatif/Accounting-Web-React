@@ -192,6 +192,23 @@ function DispatchSupplies() {
 
     const send_data = async (event) => {
         event.preventDefault();
+        
+        if(searchSupplies.length == 0 || searchSupplies == "" || searchSupplies == null){
+            alert(t("null_err_supplies"));
+            return;
+          }
+          if(countity.length == 0 || countity == "" || countity == null){
+            alert(t("null_err_countity"));
+            return;
+          }
+          if(buy_price.length == 0 || buy_price == "" || buy_price == null){
+            alert(t("null_err_buyprice"));
+            return;
+          }
+          if(dispatch_date.length == 0 || dispatch_date == "" || dispatch_date == null){
+            alert(t("null_err_date"));
+            return;
+          }
 
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
@@ -244,6 +261,23 @@ function DispatchSupplies() {
     const editDispatch = async (dispatchID) => {
         try {
             const newAccessToken = await refreshAccessToken();
+
+            if(searchEditSupplies.length == 0 || searchEditSupplies == "" || searchEditSupplies == null){
+                alert(t("null_err_supplies"));
+                return;
+              }
+              if(editDispatchData.countity.length == 0 || editDispatchData.countity == "" || editDispatchData.countity == null){
+                alert(t("null_err_countity"));
+                return;
+              }
+              if(editDispatchData.buy_price.length == 0 || editDispatchData.buy_price == "" || editDispatchData.buy_price == null){
+                alert(t("null_err_buyprice"));
+                return;
+              }
+              if(editDispatchData.dispatch_date.length == 0 || date == "" || date == null){
+                alert(t("null_err_date"));
+                return;
+              }
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-dispatches/`, {
                 ...editDispatchData,

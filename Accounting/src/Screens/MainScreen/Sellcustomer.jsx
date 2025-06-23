@@ -252,6 +252,35 @@ function SellCustomer() {
     const send_data = async (event) => {
         event.preventDefault();
 
+        if(searchCustomers.length == 0 || searchCustomers == "" || searchCustomers == null){
+            alert(t("null_err_customer"));
+            return;
+        } 
+        if(searchSupplies.length == 0 || searchSupplies == "" || searchSupplies == null){
+            alert(t("null_err_supplies"));
+            return;
+          }
+          if(countity.length == 0 || countity == "" || countity == null){
+            alert(t("null_err_countity"));
+            return;
+          }
+          if(price.length == 0 || price == "" || price == null){
+            alert(t("null_err_price"));
+            return;
+          }
+          if(debt.length == 0 || debt == "" || debt == null){
+            alert(t("null_err_debt"));
+            return;
+          } 
+          if(paid.length == 0 || paid == "" || paid == null){
+            alert(t("null_err_paid"));
+            return;
+          } 
+          if(date.length == 0 || date == "" || date == null){
+            alert(t("null_err_date"));
+            return;
+          }
+
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -312,6 +341,35 @@ function SellCustomer() {
     const editSellCustomer = async (customerID) => {
         try {
             const newAccessToken = await refreshAccessToken();
+
+            if(editsellCustomerData.customer_name.length == 0 || editsellCustomerData.customer_name == "" || editsellCustomerData.customer_name == null){
+                alert(t("null_err_customer"));
+                return;
+            } 
+            if(searchEditSupplies.length == 0 || searchEditSupplies == "" || searchEditSupplies == null){
+                alert(t("null_err_supplies"));
+                return;
+              }
+              if(editsellCustomerData.countity.length == 0 || editsellCustomerData.countity == "" || editsellCustomerData.countity == null){
+                alert(t("null_err_countity"));
+                return;
+              }
+              if(editsellCustomerData.price.length == 0 || editsellCustomerData.price == "" || editsellCustomerData.price == null){
+                alert(t("null_err_price"));
+                return;
+              }
+              if(editsellCustomerData.debt.length == 0 || editsellCustomerData.debt == "" || editsellCustomerData.debt == null){
+                alert(t("null_err_debt"));
+                return;
+              } 
+              if(editsellCustomerData.paid.length == 0 || editsellCustomerData.paid == "" || editsellCustomerData.paid == null){
+                alert(t("null_err_paid"));
+                return;
+              } 
+              if(editsellCustomerData.date_of_buying.length == 0 || editsellCustomerData.date_of_buying == "" || editsellCustomerData.date_of_buying == null){
+                alert(t("null_err_date"));
+                return;
+              }
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-customer-sell/`, {
                 ...editsellCustomerData,

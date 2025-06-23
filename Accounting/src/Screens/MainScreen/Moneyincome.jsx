@@ -113,6 +113,22 @@ function MoneyIncome() {
         event.preventDefault();
         setLoading(true);
 
+        if(moneyFrom.length == 0 || moneyFrom == "" || moneyFrom == null){
+            alert(t("null_err_customer"));
+            setLoading(false);
+            return;
+          }
+          if(total.length == 0 || total == "" || total == null){
+            alert(t("null_err_total"));
+            setLoading(false);
+            return;
+          }
+          if(incomeDate.length == 0 || incomeDate == "" || incomeDate == null){
+            alert(t("null_err_date"));
+            setLoading(false);
+            return;
+          }
+
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -141,6 +157,19 @@ function MoneyIncome() {
     const editMoneyIncome = async (id) => {
         try {
             const newAccessToken = await refreshAccessToken();
+
+            if(editIncome.length == 0 || editIncome == "" || editIncome == null){
+                alert(t("null_err_customer"));
+                return;
+              }
+              if(edittotal.length == 0 || edittotal == "" || edittotal == null){
+                alert(t("null_err_total"));
+                return;
+              }
+              if(editDate.length == 0 || editDate == "" || editDate == null){
+                alert(t("null_err_date"));
+                return;
+              }
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-income/`, {
                 id: id,

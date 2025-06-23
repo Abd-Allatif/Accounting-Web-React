@@ -78,6 +78,22 @@ function Payments() {
         event.preventDefault();
         setLoading(true);
 
+        if(moneyFor.length == 0 || moneyFor == "" || moneyFor == null){
+            alert(t("null_err_reason"));
+            setLoading(false);
+            return;
+          }
+          if(total.length == 0 || total == "" || total == null){
+            alert(t("null_err_total"));
+            setLoading(false);
+            return;
+          }
+          if(paymentDate.length == 0 || paymentDate == "" || paymentDate == null){
+            alert(t("null_err_date"));
+            setLoading(false);
+            return;
+          }
+
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -106,6 +122,19 @@ function Payments() {
     const editPayments = async (id) => {
         try {
             const newAccessToken = await refreshAccessToken();
+
+            if(editpayment.length == 0 || editpayment == "" || editpayment == null){
+                alert(t("null_err_reason"));
+                return;
+              }
+              if(edittotal.length == 0 || edittotal == "" || edittotal == null){
+                alert(t("null_err_total"));
+                return;
+              }
+              if(editDate.length == 0 || editDate == "" || editDate == null){
+                alert(t("null_err_date"));
+                return;
+              }
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-payment/`, {
                 id: id,

@@ -76,6 +76,22 @@ function Employee() {
         event.preventDefault();
         setLoading(true);
 
+        if(employeeName.length == 0 || employeeName == "" || employeeName == null){
+            alert(t("null_err_employee"));
+            setLoading(false);
+            return;
+          }
+          if(salary.length == 0 || salary == "" || salary == null){
+            alert(t("null_err_salary"));
+            setLoading(false);
+            return;
+          }
+          if(empDate.length == 0 || empDate == "" || empDate == null){
+            alert(t("null_err_date"));
+            setLoading(false);
+            return;
+          }
+          
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -96,13 +112,27 @@ function Employee() {
             location.reload();
         }).catch(error => {
             // alert("An Error Happend Please Wait and Try Again");
-            // setLoading(false);
+            setLoading(false);
         });
     };
 
     const editEmployee = async (employee) => {
         try {
             const newAccessToken = await refreshAccessToken();
+
+            if(editName.length == 0 || editName == "" || editName == null){
+                alert(t("null_err_employee"));
+                return;
+              }
+              if(editSalary.length == 0 || editSalary == "" || editSalary == null){
+                alert(t("null_err_salary"));
+                return;
+              }
+              if(editDate.length == 0 || editDate == "" || editDate == null){
+                alert(t("null_err_date"));
+                return;
+              }
+              
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-employees/`, {
                 emp_name: employee,

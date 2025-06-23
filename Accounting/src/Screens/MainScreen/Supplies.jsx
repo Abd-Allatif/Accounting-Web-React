@@ -193,6 +193,31 @@ function Supplies() {
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
+        if(searchQuery.length == 0 || searchQuery == "" || searchQuery == null){
+            alert(t("null_err_types"));
+            return
+        }
+        if(supplies.length == 0 || supplies == "" || supplies == null){
+            alert(t("null_err_supplies"));
+            return
+        }
+        if(unit.length == 0 || unit == "Unit" || unit == "" || unit == null){
+            alert(t("null_err_unit"));
+            return
+        }
+        if(countity.length == 0 || countity == "" || countity == null){
+            alert(t("null_err_countity"));
+            return
+        }
+        if(buyPrice.length == 0 || buyPrice == "" || buyPrice == null){
+            alert(t("null_err_buyprice"));
+            return
+        }
+        if(sellPrice.length == 0 || sellPrice == "" || sellPrice == null){
+            alert(t("null_err_sellprice"));
+            return
+        }
+
         await axios.post(`${import.meta.env.VITE_API_URL}/${userData.user_name}/supplies/`, {
             user: userData.user_name,
             types: searchQuery,
@@ -252,6 +277,31 @@ function Supplies() {
     const saveSupply = async (supplyId) => {
         try {
             const newAccessToken = await refreshAccessToken();
+
+            if(editSearchType.length == 0 || editSearchType == "" || editSearchType == null){
+                alert(t("null_err_types"));
+                return
+            }
+            if(newSupply.length == 0 || newSupply == "" || newSupply == null){
+                alert(t("null_err_supplies"));
+                return
+            }
+            if(editSupplyValue.unit.length == 0 || editSupplyValue.unit == "Unit" || editSupplyValue.unit == "" || editSupplyValue.unit == null){
+                alert(t("null_err_unit"));
+                return
+            }
+            if(editSupplyValue.countity.length == 0 || editSupplyValue.countity == "" || editSupplyValue.countity == null){
+                alert(t("null_err_countity"));
+                return
+            }
+            if(editSupplyValue.buy_price.length == 0 || editSupplyValue.buy_price == "" || editSupplyValue.buy_price == null){
+                alert(t("null_err_buyprice"));
+                return
+            }
+            if(editSupplyValue.sell_price.length == 0 || editSupplyValue.sell_price == "" || editSupplyValue.sell_price == null){
+                alert(t("null_err_sellprice"));
+                return
+            }
 
             await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-supplies/`, {
                 ...editSupplyValue,

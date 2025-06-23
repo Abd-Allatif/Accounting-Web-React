@@ -223,6 +223,23 @@ function MainSellScreen() {
   const send_data = async (event) => {
     event.preventDefault();
 
+    if(searchSupplies.length == 0 || searchSupplies == "" || searchSupplies == null){
+      alert(t("null_err_supplies"));
+      return;
+    }
+    if(countity.length == 0 || countity == "" || countity == null){
+      alert(t("null_err_countity"));
+      return;
+    }
+    if(price.length == 0 || price == "" || price == null){
+      alert(t("null_err_price"));
+      return;
+    }
+    if(date.length == 0 || date == "" || date == null){
+      alert(t("null_err_date"));
+      return;
+    }
+    
     // Refresh the access token
     const newAccessToken = await refreshAccessToken();
 
@@ -282,6 +299,24 @@ function MainSellScreen() {
 
   const editSell = async (sellID) => {
     try {
+
+      if(searchEditSupplies.length == 0 || searchEditSupplies == "" || searchEditSupplies == null){
+        alert(t("null_err_supplies"));
+        return;
+      }
+      if(editsellData.countity.length == 0 || editsellData.countity == "" || editsellData.countity == null){
+        alert(t("null_err_countity"));
+        return;
+      }
+      if(editsellData.price.length == 0 || editsellData.price == "" || editsellData.price == null){
+        alert(t("null_err_price"));
+        return;
+      }
+      if(editsellData.date.length == 0 || editsellData.date == "" || editsellData.date == null){
+        alert(t("null_err_date"));
+        return;
+      }
+
       const newAccessToken = await refreshAccessToken();
 
       console.log(editsellData);

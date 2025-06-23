@@ -69,6 +69,12 @@ function Types() {
         event.preventDefault();
         setLoading(true);
 
+        if(types == "" || types.length == 0 || types == null){
+            alert(t("null_err_types"));
+            setLoading(false);
+            return;
+        }
+
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -96,6 +102,12 @@ function Types() {
 
     const updateType = async (typeKey) => {
         const newAccessToken = await refreshAccessToken();
+
+        if(editTypeValue == "" || editTypeValue.length == 0 || editTypeValue == null){
+            alert(t("null_err_types"));
+            return;
+        }
+
         await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/types_edit`, {
             old_type: typeKey,
             new_type: editTypeValue

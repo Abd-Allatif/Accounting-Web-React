@@ -69,6 +69,12 @@ function Customers() {
         event.preventDefault();
         setLoading(true);
 
+        if(customer.length == 0 || customer == "" || customer == null){
+            alert(t("null_err_customer"));
+            setLoading(false);
+            return;
+        }
+
         // Refresh the access token
         const newAccessToken = await refreshAccessToken();
 
@@ -97,6 +103,12 @@ function Customers() {
 
     const edit_Customer = async (customerKey) => {
         const newAccessToken = await refreshAccessToken();
+        
+        if(editCustomer.length == 0 || editCustomer == "" || editCustomer ==null){
+            alert(t("null_err_customer"));
+            return;
+        }
+
         await axios.put(`${import.meta.env.VITE_API_URL}/${userData.user_name}/edit-customers/`, {
             old_customer: customerKey,
             new_customer: editCustomerValue
