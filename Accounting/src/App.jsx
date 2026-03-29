@@ -1,38 +1,33 @@
 import './App.css'
 import React from 'react'
-const Login = React.lazy(() => import('./Screens/User/Login'))
-const Register = React.lazy(() => import('./Screens/User/Register'))
-const Resetpass = React.lazy(() => import('./Screens/User/Resertpass'))
-const SetAccount = React.lazy(() => import('./Screens/Accountsetup/Setaccount'))
-const MainSellScreen = React.lazy(() => import('./Screens/MainScreen/Mainscreen'))
-const Customers = React.lazy(() => import('./Screens/MainScreen/Customers'))
-const SellCustomer = React.lazy(() => import('./Screens/MainScreen/Sellcustomer'))
-const MoneyIncome = React.lazy(() => import('./Screens/MainScreen/Moneyincome'))
-const Payments = React.lazy(() => import('./Screens/MainScreen/Payments'))
-const Types = React.lazy(() => import('./Screens/MainScreen/Types'))
-const Supplies = React.lazy(() => import('./Screens/MainScreen/Supplies'))
-const Reciepts = React.lazy(() => import('./Screens/MainScreen/Reciepts'))
-const Employee = React.lazy(() => import('./Screens/MainScreen/Employee'))
-const mathNotes = React.lazy(() => import('./Screens/ai/MathNotes'))
-const NotFound = React.lazy(() => import('./Screens/Notfound/Notfound'))
-import Loading from './Screens/LoadingScreen/Loading'
-const DispatchSupplies = React.lazy(() => import('./Screens/MainScreen/Dispatchsupplies'))
-const Inventory = React.lazy(() => import('./Screens/MainScreen/Inventory'))
-const Options = React.lazy(() => import('./Screens/MainScreen/Options'))
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+const Login = React.lazy(() => import('./pages/User/Login'))
+const Register = React.lazy(() => import('./pages/User/Register'))
+const Resetpass = React.lazy(() => import('./pages/User/Resertpass'))
+const SetAccount = React.lazy(() => import('./pages/Accountsetup/Setaccount'))
+const MainSellScreen = React.lazy(() => import('./pages/MainScreen/Mainscreen'))
+const Customers = React.lazy(() => import('./pages/MainScreen/Customers'))
+const SellCustomer = React.lazy(() => import('./pages/MainScreen/Sellcustomer'))
+const MoneyIncome = React.lazy(() => import('./pages/MainScreen/Moneyincome'))
+const Payments = React.lazy(() => import('./pages/MainScreen/Payments'))
+const Types = React.lazy(() => import('./pages/MainScreen/Types'))
+const Supplies = React.lazy(() => import('./pages/MainScreen/Supplies'))
+const Reciepts = React.lazy(() => import('./pages/MainScreen/Reciepts'))
+const Employee = React.lazy(() => import('./pages/MainScreen/Employee'))
+const MathNotes = React.lazy(() => import('./pages/ai/MathNotes'))
+const NotFound = React.lazy(() => import('./pages/Notfound/Notfound'))
+import Loading from './pages/LoadingScreen/Loading'
+const DispatchSupplies = React.lazy(() => import('./pages/MainScreen/Dispatchsupplies'))
+const Inventory = React.lazy(() => import('./pages/MainScreen/Inventory'))
+const Options = React.lazy(() => import('./pages/MainScreen/Options'))
+import { Route, Routes} from 'react-router-dom';
 import { Suspense } from 'react';
-import { AuthProvider } from './Tools/AuthContext';
-import PrivateRoute from './Tools/PrivateRoute';
-
-
-
-
+import { AuthProvider } from './context/AuthContext';
+import { PrivateRoute } from './components';
 
 function App() {
   return (
     <AuthProvider>
       <Suspense fallback={<Loading />}>
-        <Router>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -49,11 +44,10 @@ function App() {
             <Route path="/main/reciepts" element={<PrivateRoute element={Reciepts} />} />
             <Route path="/main/employees" element={<PrivateRoute element={Employee} />} />
             <Route path="/main/inventory" element={<PrivateRoute element={Inventory} />} />
-            <Route path="/math-notes" element={<PrivateRoute element={mathNotes} />} />
+            <Route path="/math-notes" element={<PrivateRoute element={MathNotes} />} />
             <Route path="/main/options" element={<PrivateRoute element={Options} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
       </Suspense>
     </AuthProvider>
   )
