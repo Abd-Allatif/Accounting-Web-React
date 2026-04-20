@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { refreshAccessToken } from '../services/authService';
@@ -57,8 +58,8 @@ function CustomDrawer({ isOpen, toggleDrawer }) {
     { key: 'inventory',       path: '/main/inventory' },
   ];
 
-  return (
-    <DrawerWrapper>
+  const drawerContent = (
+    <>
       <Overlay $isOpen={isOpen} onClick={toggleDrawer(false)} />
       <DrawerContent $drawerSide={drawerSide} $isOpen={isOpen}>
         <div className="Drawer" onClick={toggleDrawer(false)}>
@@ -110,11 +111,13 @@ function CustomDrawer({ isOpen, toggleDrawer }) {
           </nav>
         </div>
       </DrawerContent>
-    </DrawerWrapper>
+    </>
   );
+
+  return createPortal(drawerContent, document.body);
 }
 
-const DrawerWrapper = styled.div`position: relative;`;
+
 
 const Overlay = styled.div`
   position: fixed;
@@ -124,7 +127,7 @@ const Overlay = styled.div`
   opacity: ${p => p.$isOpen ? '1' : '0'};
   pointer-events: ${p => p.$isOpen ? 'auto' : 'none'};
   transition: opacity 0.3s ease;
-  z-index: 999;
+  z-index: 9999;
 `;
 
 const DrawerContent = styled.div`
@@ -140,7 +143,7 @@ const DrawerContent = styled.div`
     border-${p => p.$drawerSide === 'left' ? 'right' : 'left'}: 1px solid var(--border, rgba(99,102,241,0.12));
     transform: translateX(${p => p.$isOpen ? '0' : p.$drawerSide === 'left' ? '-100%' : '100%'});
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
+    z-index: 10000;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
