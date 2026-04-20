@@ -1,65 +1,46 @@
-/* eslint-disable react/prop-types */
+import React from 'react';
 import styled from 'styled-components';
 
-let dimensions = {
-  width: '3',
-  height: '20',
-  animateHeight: '35',
-}
-const Loader = ({ width, height, animateHeight }) => {
-  dimensions.width = width;
-  dimensions.height = height;
-  dimensions.animateHeight = animateHeight;
+const Loader = ({ width = '3', height = '20', animateHeight = '35' }) => (
+  <LoaderStyle $w={width} $h={height} $ah={animateHeight}>
+    <div className="loader">
+      <span className="bar" />
+      <span className="bar" />
+      <span className="bar" />
+    </div>
+  </LoaderStyle>
+);
 
-  const StyledWrapper = styled.div`
+const LoaderStyle = styled.div`
   .loader {
     display: flex;
     align-items: center;
+    gap: 4px;
   }
 
   .bar {
     display: inline-block;
-    width: ${dimensions.width}px;
-    height: ${dimensions.height}px;
-    background-color: rgba(255, 255, 255, .5);
+    width: ${p => p.$w}px;
+    height: ${p => p.$h}px;
+    background: linear-gradient(180deg, var(--accent, #6366f1), var(--cyan, #22d3ee));
     border-radius: 10px;
-    animation: scale-up4 1s linear infinite;
+    animation: barPulse 1s ease-in-out infinite;
   }
 
   .bar:nth-child(2) {
-    height: ${dimensions.animateHeight}px;
-    margin: 0 5px;
-    animation-delay: .25s;
+    height: ${p => p.$ah}px;
+    animation-delay: 0.2s;
+    background: linear-gradient(180deg, var(--accent-light, #818cf8), var(--accent, #6366f1));
   }
 
   .bar:nth-child(3) {
-    animation-delay: .5s;
+    animation-delay: 0.4s;
   }
 
-  @keyframes scale-up4 {
-    20% {
-      background-color: #ffff;
-      transform: scaleY(1.5);
-    }
-
-    40% {
-      transform: scaleY(1);
-    }
-  }`;
-
-
-
-  return (
-    <StyledWrapper>
-      <div className="loader">
-        <span className="bar" />
-        <span className="bar" />
-        <span className="bar" />
-      </div>
-    </StyledWrapper>
-  );
-}
-
-
+  @keyframes barPulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.6; }
+    50%       { transform: scaleY(1.5); opacity: 1; }
+  }
+`;
 
 export default Loader;

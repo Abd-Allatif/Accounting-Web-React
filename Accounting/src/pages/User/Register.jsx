@@ -1,216 +1,133 @@
-import { useState } from "react";
+import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Loader } from "../../components";
-import { BackGround, Card, InputField, Button } from '../../components'
-import { useTranslation } from "react-i18next";
+import { Loader, BackGround, InputField, Button } from '../../components';
+import { useTranslation } from 'react-i18next';
 
 function Register() {
-  const { t} = useTranslation();
-
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [resetCode, setResetCode] = useState('');
-  
-  const [resetCodeMessage,setResetCodeMessage] = useState({
-    line1:'',
-    line2:'',
-    line3:'',
-  });
-
+  const [resetCodeMessage, setResetCodeMessage] = useState({ line1: '', line2: '', line3: '' });
   const navigate = useNavigate();
 
-  function returnLoginPage() {
-    setResetCode("");
-    navigate('/');
-  }
+  function returnLoginPage() { setResetCode(''); navigate('/'); }
 
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  function validatePassword(p) {
+    return /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+]).{8,}$/.test(p);
+  }
+  const getRandomString = (n) => {
+    const c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    return Array.from({ length: n }, () => c[Math.floor(Math.random() * c.length)]).join('');
   };
 
-  function validatePassword(password) {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+]).{8,}$/;
-    return passwordRegex.test(password);
-  }
-
-  const getRandomString = (length) =>  {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      result += characters.charAt(randomIndex);
-    }
-    return result;
-  }
-  
   const submitData = async (event) => {
     event.preventDefault();
     setLoading(true);
-    
     const code = getRandomString(10);
     setResetCode(code);
-
-    if(!validatePassword(password)){
-      window.alert(t("passwordRegixError"));
+    if (!validatePassword(password)) { window.alert(t('passwordRegixError')); setLoading(false); return; }
+    if (password !== confirmPassword) { window.alert(t('passwordmatcherror')); setLoading(false); return; }
+    if (!isValidEmail(email)) { window.alert('Invalid email address'); setLoading(false); return; }
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}/register/`, { username, email, password, resetCode: code });
+      window.alert('Registration successful');
+      setResetCodeMessage({ line1: t('dontLoseIt'), line2: code, line3: t('resetcode') });
       setLoading(false);
-    }
-    else if (password !== confirmPassword || password == null || confirmPassword == null) {
-      window.alert(t("passwordmatcherror"));
-      setLoading(false);
-      return;
-    }
-    // Check if email is valid 
-    else if (!isValidEmail(email)) {
-      window.alert('Password Does not Match')
-      setLoading(false)
-      return;
-    }
-    else {
-      await axios.post(`${import.meta.env.VITE_API_URL}/register/`, {
-        username,
-        email,
-        password,
-        resetCode:code
-      }).then(response => {
-        window.alert('Registration successful', response.data);
-        setResetCodeMessage({line1:t("dontLoseIt"),line2:code,line3:t("resetcode")});
-        setLoading(false);
-      }).catch(error => {
-        setLoading(false);
-        window.alert(`Something Went Wrong Please Check Your Information`);
-      });
-    }
+    } catch { setLoading(false); window.alert('Something Went Wrong. Please Check Your Information'); }
   };
 
-
-  return (<>
-    <StyledWrapper>
+  return (
+    <PageWrapper>
       <BackGround>
-        <Card className="ItemsContainer">
-          <p id="heading">{t("signUp")}</p>
-          <div className="ResetCode">
-            {resetCode && <p style={{ color: 'white' }}><b><u>{resetCodeMessage.line1}</u> <span style={{ color: "Red", fontFamily: "arial" }}>{resetCodeMessage.line2}</span> <u>{resetCodeMessage.line3}</u></b></p>}
+        <RegisterCard>
+          <div className="Brand">
+            <div className="BrandIcon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <span className="BrandName">Accountify</span>
           </div>
-          <div className='InputContainer'>
-            <InputField autoComplete="off"
-              includeSVG svgPath="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"
-              placeholder={t("userName")} type="text" value={username} onChange={(e) => setUsername(e.target.value.toLowerCase())} />
-
-            <InputField autoComplete="off"
-              includeSVG viewBox="0 0 20 20" svgPath="M4 7L10.94 11.3375C11.5885 11.7428 12.4115 11.7428 13.06 11.3375L20 7M5 18H19C20.1046 18 21 17.1046 21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              placeholder={t("email")} type="text" className="EmailField" value={email} onChange={(e) => setEmail(e.target.value.toLowerCase())} />
-
-            <InputField placeholder={(t("password"))}
-              includeSVG svgPath="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
-              type="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-            <InputField placeholder={t("confirmPassword")}
-              includeSVG svgPath="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
-              type="Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <div className="CardHeader">
+            <h1 className="CardTitle">{t('signUp')}</h1>
+            <p className="CardSubtitle">Create your account to get started</p>
           </div>
-          <div className="btn">
-            <Button className="Register" onClick={submitData}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t("signUp")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Button>
-            <Button className="BackButton" onClick={returnLoginPage}>{t("back")}</Button>
-          </div>
-          <div className='Loader'>
-            {loading && <Loader width='3' height='20' animateHeight='36' />}
-          </div>
-        </Card>
+          {resetCode && (
+            <div className="CodeBanner">
+              <span>🔑</span>
+              <div>
+                <strong>{resetCodeMessage.line1}</strong>
+                <span className="Code"> {resetCodeMessage.line2} </span>
+                <small>{resetCodeMessage.line3}</small>
+              </div>
+            </div>
+          )}
+          <form className="Form" onSubmit={submitData}>
+            <InputField autoComplete="off" placeholder={t('userName')} type="text" value={username}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())} />
+            <InputField autoComplete="off" placeholder={t('email')} type="text" value={email}
+              onChange={(e) => setEmail(e.target.value.toLowerCase())} />
+            <InputField placeholder={t('password')} type="password" value={password}
+              onChange={(e) => setPassword(e.target.value)} />
+            <InputField placeholder={t('confirmPassword')} type="password" value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)} />
+            <div className="Actions">
+              <Button type="submit">{t('signUp')}</Button>
+              <Button type="button" className="ghost" onClick={returnLoginPage}>{t('back')}</Button>
+            </div>
+          </form>
+          {loading && <div className="LoaderRow"><Loader width="3" height="20" animateHeight="36" /></div>}
+        </RegisterCard>
       </BackGround>
-    </StyledWrapper>
-  </>)
+    </PageWrapper>
+  );
 }
 
-const StyledWrapper = styled.div`
-  .InputContainer{
-    margin-top: 25px;
+const PageWrapper = styled.div``;
+
+const RegisterCard = styled.div`
+  background: var(--bg-card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--shadow-card);
+  padding: 2.5em 2em; width: 420px; max-width: 92vw;
+  display: flex; flex-direction: column; gap: 0;
+  animation: cardIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+  @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(0.97)} to{opacity:1;transform:none} }
+
+  .Brand { display:flex; align-items:center; gap:0.5em; margin-bottom:1.25em; }
+  .BrandIcon {
+    width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;
+    justify-content:center;color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+    box-shadow:0 4px 16px var(--accent-glow);
   }
-
-  .ItemsContainer{
-    height:500px;
+  .BrandName { font-size:1rem;font-weight:700;color:var(--text-primary); }
+  .CardHeader { margin-bottom:1.25em; }
+  .CardTitle { font-size:1.4rem;font-weight:700;color:var(--text-primary);margin-bottom:0.3em; }
+  .CardSubtitle { font-size:0.85rem;color:var(--text-muted); }
+  .CodeBanner {
+    display:flex;gap:0.6em;align-items:flex-start;
+    background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);
+    border-radius:var(--radius-sm);padding:0.75em 1em;margin-bottom:0.75em;font-size:0.85rem;
+    strong{color:var(--amber);display:block;}
+    small{color:var(--text-muted);}
   }
-
-  #heading {
-    text-align: center;
-    margin-top: 2em;
-    color: rgb(255, 255, 255);
-    font-size: 1.2em;
+  .Code { font-family:monospace;font-weight:700;color:var(--rose); }
+  .Form { display:flex;flex-direction:column; }
+  .Actions {
+    display:flex;gap:0.5em;margin-top:0.75em;
+    .Button{flex:1;justify-content:center;margin-right:0;}
   }
+  .LoaderRow { display:flex;justify-content:center;margin-top:1em; }
+  @media (max-width:480px) { padding:1.75em 1.25em;border-radius:var(--radius-lg); }
+`;
 
-  .btn {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    margin-top: 2.7em;
-    margin-bottom: 1em;
-  }
-
-  .Register {
-    padding: 0.5em;
-    padding-left: 1.1em;
-    padding-right: 1.1em;
-    border-radius: 5px;
-    margin-right: 0.5em;
-    border: none;
-    outline: none;
-    transition: .4s ease-in-out;
-    background-color: #252525;
-    color: white;
-  }
-
-  
-
-  .BackButton {
-    padding: 0.5em;
-    padding-left: 2.3em;
-    padding-right: 2.3em;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    transition: .4s ease-in-out;
-    background-color: #252525;
-    color: white;
-
-    &.BackButton:hover {
-      background-color: red;
-      color: white;
-    }
-  }
-
-  .Loader{
-    align-self: center;
-  }
-  
-  .ResetCode{
-    align-self: center;
-  }
-
-   @media (max-width: 768px) {
-      .ItemsContainer{
-        height:400px;
-        width:300px;
-      }
-
-      .Register{
-          padding-left:0.5em;
-          padding-right:0.5em;
-      }
-
-
-   }
-  `;
-
-export default Register
-
-
-
-
-
-
-
+export default Register;
