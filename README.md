@@ -1,63 +1,9 @@
-# Accounting Management System
+# React + Vite
 
-A production-ready, comprehensive accounting and inventory management system built with React 18, Vite, and Styled-components.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Problem Statement
+Currently, two official plugins are available:
 
-Small businesses often struggle with maintaining accurate records of sales, supplies, inventory, and employee payments. Manual record-keeping is error-prone and inefficient. This project provides a centralized platform to manage all business accounting needs seamlessly.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Why We Made This Project
-
-The goal was to create a user-friendly, responsive, and robust application that helps business owners:
-- **Track sales** and manage customer debts efficiently.
-- **Manage supply purchases** and maintain optimal inventory levels.
-- **Handle employee records** and salary payments.
-- **Generate and export reports** in Excel and PDF formats.
-- **Leverage AI** for quick math notes and solving mathematical expressions on a canvas.
-
-## Key Technical Features
-
-### Architecture & SOLID Principles
-- **Separation of Concerns**: Moved all API logic to a dedicated service layer (`src/services/`). UI components are purely representational or handle local state.
-- **Modular Components**: Every UI component has its own file in `src/components/`, ensuring better maintainability and reusability.
-- **Generic API Client**: Implemented a central `apiClient` using Axios with interceptors for automatic token refreshing and error handling.
-
-### Demo Mode (Guest Access)
-- A "Guest Demo Login" feature allows users to explore the full functionality of the application using mock data.
-- The `mockService` provides a local data source, ensuring no data is sent to a server while in demo mode.
-
-### Localization
-- Fully integrated with `i18next` for multi-language support (currently supports English and Arabic).
-- Responsive layout that adjusts based on the language direction (LTR/RTL).
-
-### Production Ready
-- **Lazy Loading**: Routes are lazy-loaded to minimize the initial bundle size and improve performance.
-- **Styled-components**: Used for modular styling, avoiding global CSS conflicts.
-- **Build Process**: Optimized with Vite for fast HMR and efficient production builds.
-
-## Getting Started
-
-### Prerequisites
-- Node.js (v16+)
-- npm or yarn
-
-### Installation
-1. Clone the repository.
-2. Navigate to the project directory: `cd Accounting`
-3. Install dependencies: `npm install`
-4. Start the development server: `npm run dev`
-
-### Running Tests
-This project uses Vitest for unit testing.
-```bash
-npm test
-```
-
-### Production Build
-To generate a production-ready build:
-```bash
-npm run build
-```
-
-## Demo
-Use the **Guest Demo Login** on the login page to explore the project instantly without a backend.
