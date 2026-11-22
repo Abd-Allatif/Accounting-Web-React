@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { guestLogin } from './authService';
 
-// Mock localStorage
 const localStorageMock = (() => {
   let store = {};
   return {
@@ -15,10 +14,11 @@ global.localStorage = localStorageMock;
 
 describe('authService', () => {
   it('guestLogin sets correct localStorage items', () => {
-    const onSuccess = vi.fn();
-    guestLogin(onSuccess);
+    guestLogin();
+    expect(localStorage.setItem).toHaveBeenCalledWith('access_token', 'guest_access_token');
+    expect(localStorage.setItem).toHaveBeenCalledWith('refresh_token', 'guest_refresh_token');
+    expect(localStorage.setItem).toHaveBeenCalledWith('user_data', JSON.stringify({ user_name: 'guest' }));
     expect(localStorage.setItem).toHaveBeenCalledWith('is_guest', 'true');
     expect(localStorage.getItem('is_guest')).toBe('true');
-    expect(onSuccess).toHaveBeenCalledWith('/main');
   });
 });
